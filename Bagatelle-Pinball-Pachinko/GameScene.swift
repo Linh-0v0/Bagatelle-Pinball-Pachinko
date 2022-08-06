@@ -6,83 +6,84 @@
 //
 
 import SpriteKit
-import GameplayKit
 
 class GameScene: SKScene {
-    
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
-    
     override func didMove(to view: SKView) {
+        let background = SKSpriteNode(imageNamed: "background")
+        background.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
+        background.size = CGSize(width: self.size.width, height: self.size.height)
+        background.blendMode = .replace
+        background.zPosition = -1
+        addChild(background)
         
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
+        physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+    
+        makeBouncer(imageName: "pink-loli", position: CGPoint(x: 200, y: 300), size: CGSize(width: self.size.width/5, height: self.size.height/6), zRotation: -1)
         
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
-        
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
-    }
-    
-    
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
+        makeSlot(position: CGPoint(x: 100, y: 0), markScore: 0)
+        makeSlot(position: CGPoint(x: 190, y: 0), markScore: 20)
+        makeSlot(position: CGPoint(x: 280, y: 0), markScore: 50)
+        makeSlot(position: CGPoint(x: 370, y: 0), markScore: 100)
+        makeSlot(position: CGPoint(x: 455, y: 0), markScore: 50)
+        makeSlot(position: CGPoint(x: 545, y: 0), markScore: 20)
+        makeSlot(position: CGPoint(x: 635, y: 0), markScore: 0)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+        guard let touch = touches.first else {return}
+        let location = touch.location(in: self)
+        
+        let ball = SKSpriteNode(imageNamed: "yellow-ball")
+        ball.size = CGSize(width: 50, height: 50)
+        ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width/2.0)
+        //bounciness
+        ball.physicsBody?.restitution = 0.3
+        ball.position = location
+        addChild(ball)
+    }
+    
+    func makeBouncer(imageName: String, position: CGPoint, size: CGSize, zRotation: CGFloat) {
+        let bouncer = SKSpriteNode(imageNamed: imageName)
+        bouncer.position = position
+        bouncer.size = size
+        bouncer.zRotation = zRotation
+        bouncer.physicsBody = SKPhysicsBody(texture: bouncer.texture!, size: bouncer
+            .size)
+//        when collides, the object with 'isDynamic=false' won't move
+        bouncer.physicsBody?.isDynamic = false
+        addChild(bouncer)
+    }
+    
+    func makeSlot(position: CGPoint, markScore: Int) {
+        var slotBase: SKSpriteNode
+        let textScore = SKLabelNode(fontNamed: "Chalkduster")
+        textScore.fontSize = 20
+        textScore.fontColor = SKColor.white
+
+        if markScore == 100 {
+            slotBase = SKSpriteNode(imageNamed: "rect slot")
+            slotBase.size = CGSize(width: 80, height: 150)
+            textScore.text = "100"
+            textScore.position = CGPoint(x: frame.midX, y: frame.midY)
+        } else if markScore == 50 {
+            slotBase = SKSpriteNode(imageNamed: "rect slot")
+            slotBase.size = CGSize(width: 80, height: 150)
+            textScore.text = "50"
+            textScore.position = CGPoint(x: frame.midX, y: frame.midY)
+        } else if markScore == 20 {
+            slotBase = SKSpriteNode(imageNamed: "rect slot")
+            slotBase.size = CGSize(width: 80, height: 150)
+            textScore.text = "20"
+            textScore.position = CGPoint(x: frame.midX, y: frame.midY)
+        } else {
+            slotBase = SKSpriteNode(imageNamed: "rect slot")
+            slotBase.size = CGSize(width: 90, height: 150)
+            textScore.text = "0"
+            textScore.position = CGPoint(x: frame.midX, y: frame.midY)
         }
         
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
+        slotBase.position = position
+        addChild(slotBase)
+        addChild(textScore)
     }
 }
