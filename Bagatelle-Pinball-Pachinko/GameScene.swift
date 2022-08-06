@@ -8,6 +8,13 @@
 import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    var scoreLabel: SKLabelNode!
+    var score = 0 {
+        didSet {
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
+    
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "background")
         background.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
@@ -15,6 +22,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         background.blendMode = .replace
         background.zPosition = -1
         addChild(background)
+        
+        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        scoreLabel.text = "Score: 0"
+        scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.position = CGPoint(x: frame.size.width - 100, y: frame.size.height - 100)
+        addChild(scoreLabel)
         
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = self
@@ -100,8 +113,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func collisionBetween(ball: SKNode, object: SKNode) {
-        if (object.name == "slot100" || object.name == "slot50" || object.name == "slot20" || object.name == "slot0") {
+        if object.name == "slot100" {
             destroy(ball: ball)
+            score += 100
+        } else if object.name == "slot50" {
+            destroy(ball: ball)
+            score += 50
+        } else if object.name == "slot20" {
+            destroy(ball: ball)
+            score += 20
+        } else if object.name == "slot0" {
+            destroy(ball: ball)
+            score += 0
         }
     }
     
