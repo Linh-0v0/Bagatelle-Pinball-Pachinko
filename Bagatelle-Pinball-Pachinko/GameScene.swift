@@ -129,6 +129,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func destroy(ball: SKNode) {
+        if let bokehParticle = SKEmitterNode(fileNamed: "BokehEffect") {
+            bokehParticle.position = ball.position
+            addChild(bokehParticle)
+        }
 //        remove the node from the game
         ball.removeFromParent()
     }

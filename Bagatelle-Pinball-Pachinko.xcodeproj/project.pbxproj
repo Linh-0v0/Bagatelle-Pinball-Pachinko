@@ -14,6 +14,9 @@
 		C4A0C2C1289CE1F40007876E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C2BF289CE1F40007876E /* Main.storyboard */; };
 		C4A0C2C3289CE1F60007876E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C2C2289CE1F60007876E /* Assets.xcassets */; };
 		C4A0C2C6289CE1F60007876E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C2C4289CE1F60007876E /* LaunchScreen.storyboard */; };
+		C4A0C2CD289ED7670007876E /* BokehEffect.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C2CC289ED7670007876E /* BokehEffect.sks */; };
+		C4A0C2D1289ED7800007876E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C2CF289ED7800007876E /* Assets.xcassets */; };
+		C4A0C2D5289ED7DD0007876E /* SparkEffect.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C2D4289ED7DD0007876E /* SparkEffect.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +28,9 @@
 		C4A0C2C0289CE1F40007876E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C4A0C2C2289CE1F60007876E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4A0C2C5289CE1F60007876E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C4A0C2CC289ED7670007876E /* BokehEffect.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BokehEffect.sks; sourceTree = "<group>"; };
+		C4A0C2CF289ED7800007876E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C4A0C2D4289ED7DD0007876E /* SparkEffect.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SparkEffect.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +47,7 @@
 		C4A0C2A9289CE1F40007876E = {
 			isa = PBXGroup;
 			children = (
+				C4A0C2CF289ED7800007876E /* Assets.xcassets */,
 				C4A0C2B4289CE1F40007876E /* Bagatelle-Pinball-Pachinko */,
 				C4A0C2B3289CE1F40007876E /* Products */,
 			);
@@ -64,6 +71,8 @@
 				C4A0C2BF289CE1F40007876E /* Main.storyboard */,
 				C4A0C2C2289CE1F60007876E /* Assets.xcassets */,
 				C4A0C2C4289CE1F60007876E /* LaunchScreen.storyboard */,
+				C4A0C2CC289ED7670007876E /* BokehEffect.sks */,
+				C4A0C2D4289ED7DD0007876E /* SparkEffect.sks */,
 			);
 			path = "Bagatelle-Pinball-Pachinko";
 			sourceTree = "<group>";
@@ -126,8 +135,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4A0C2CD289ED7670007876E /* BokehEffect.sks in Resources */,
 				C4A0C2C1289CE1F40007876E /* Main.storyboard in Resources */,
 				C4A0C2B8289CE1F40007876E /* GameScene.sks in Resources */,
+				C4A0C2D5289ED7DD0007876E /* SparkEffect.sks in Resources */,
+				C4A0C2D1289ED7800007876E /* Assets.xcassets in Resources */,
 				C4A0C2C3289CE1F60007876E /* Assets.xcassets in Resources */,
 				C4A0C2C6289CE1F60007876E /* LaunchScreen.storyboard in Resources */,
 			);
