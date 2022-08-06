@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "background")
         background.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
@@ -17,6 +17,7 @@ class GameScene: SKScene {
         addChild(background)
         
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+        physicsWorld.contactDelegate = self
     
         makeBouncer(imageName: "pink-loli", position: CGPoint(x: 200, y: 300), size: CGSize(width: self.size.width/5, height: self.size.height/6), zRotation: -1)
         
@@ -38,7 +39,10 @@ class GameScene: SKScene {
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width/2.0)
         //bounciness
         ball.physicsBody?.restitution = 0.3
+//        ball.physicsBody?.contactTestBitMask = ball.physicsBody?.collisionBitMask ?? 0
+        ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
         ball.position = location
+        ball.name = "ball"
         addChild(ball)
     }
     
@@ -46,6 +50,7 @@ class GameScene: SKScene {
         let bouncer = SKSpriteNode(imageNamed: imageName)
         bouncer.position = position
         bouncer.size = size
+        bouncer.name = "bouncer"
         bouncer.zRotation = zRotation
         bouncer.physicsBody = SKPhysicsBody(texture: bouncer.texture!, size: bouncer
             .size)
@@ -57,33 +62,62 @@ class GameScene: SKScene {
     func makeSlot(position: CGPoint, markScore: Int) {
         var slotBase: SKSpriteNode
         let textScore = SKLabelNode(fontNamed: "Chalkduster")
-        textScore.fontSize = 20
+        textScore.fontSize = 40
         textScore.fontColor = SKColor.white
 
         if markScore == 100 {
             slotBase = SKSpriteNode(imageNamed: "rect slot")
             slotBase.size = CGSize(width: 80, height: 150)
+            slotBase.name = "slot100"
             textScore.text = "100"
-            textScore.position = CGPoint(x: frame.midX, y: frame.midY)
+            textScore.position = position
         } else if markScore == 50 {
             slotBase = SKSpriteNode(imageNamed: "rect slot")
             slotBase.size = CGSize(width: 80, height: 150)
+            slotBase.name = "slot50"
             textScore.text = "50"
-            textScore.position = CGPoint(x: frame.midX, y: frame.midY)
+            textScore.position = position
         } else if markScore == 20 {
             slotBase = SKSpriteNode(imageNamed: "rect slot")
             slotBase.size = CGSize(width: 80, height: 150)
+            slotBase.name = "slot20"
             textScore.text = "20"
-            textScore.position = CGPoint(x: frame.midX, y: frame.midY)
+            textScore.position = position
         } else {
             slotBase = SKSpriteNode(imageNamed: "rect slot")
             slotBase.size = CGSize(width: 90, height: 150)
+            slotBase.name = "slot0"
             textScore.text = "0"
-            textScore.position = CGPoint(x: frame.midX, y: frame.midY)
+            textScore.position = position
         }
         
         slotBase.position = position
+        slotBase.physicsBody = SKPhysicsBody(rectangleOf: slotBase.size)
+        slotBase.physicsBody?.isDynamic = false
+       
         addChild(slotBase)
         addChild(textScore)
+    }
+    
+    func collisionBetween(ball: SKNode, object: SKNode) {
+        if (object.name == "slot100" || object.name == "slot50" || object.name == "slot20" || object.name == "slot0") {
+            destroy(ball: ball)
+        }
+    }
+    
+    func destroy(ball: SKNode) {
+//        remove the node from the game
+        ball.removeFromParent()
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        guard let nodeA = contact.bodyA.node else { return }
+        guard let nodeB = contact.bodyB.node else { return }
+
+        if nodeA.name == "ball" {
+            collisionBetween(ball: nodeA, object: nodeB)
+        } else if nodeB.name == "ball" {
+            collisionBetween(ball: nodeB, object: nodeA)
+        }
     }
 }
