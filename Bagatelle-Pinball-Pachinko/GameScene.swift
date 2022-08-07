@@ -32,20 +32,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = self
     
-        var randomPositionXArr: [Int] = genRandomNumIncrement(from: 80, to: 680, by: 94)
-        var randomPositionYArr: [Int] = genRandomNumIncrement(from: 170, to: 1000, by: 86)
-        for _ in 1...60 {
-            makeBouncer(imageName: "Plus Symbol-\(Int.random(in: 0..<10))",
-                        position: CGPoint(x: randomPositionXArr.randomElement()!, y: randomPositionYArr.randomElement()!),
-                        size: CGSize(width: self.size.width/19, height: self.size.height/33),
-                        zRotation: Double.random(in: -1..<2), zPosition: 0)
+        var randomPositionXArr: [Int] = genRandomNumIncrement(from: 20, to: 650, by: 106)
+        var randomPositionYArr: [Int] = genRandomNumIncrement(from: 120, to: 1000, by: 106)
+    
+        for x in randomPositionXArr {
+            for y in randomPositionYArr {
+                makeBouncer(imageName: "Plus Symbol-\(Int.random(in: 0..<10))",
+                            position: CGPoint(x: x + Int.random(in: 40...150), y: y + Int.random(in: 40...80)),
+                            size: CGSize(width: self.size.width/19, height: self.size.height/33),
+                            zRotation: Double.random(in: -1..<2), zPosition: 0)
+            }
         }
 
-        makeBouncer(imageName: "pink-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: randomPositionYArr.randomElement()!), size: CGSize(width: self.size.width/5, height: self.size.height/6), zRotation: -0.2, zPosition: 1)
-        makeBouncer(imageName: "pink-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: randomPositionYArr.randomElement()!), size: CGSize(width: self.size.width/6, height: self.size.height/7), zRotation: -0.055, zPosition: 1)
-        makeBouncer(imageName: "black-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: randomPositionYArr.randomElement()!), size: CGSize(width: self.size.width/5, height: self.size.height/6), zRotation: -0.1, zPosition: 1)
-        makeBouncer(imageName: "red-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: randomPositionYArr.randomElement()!), size: CGSize(width: self.size.width/9, height: self.size.height/10), zRotation: 0.5, zPosition: 1)
-        makeBouncer(imageName: "red-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: randomPositionYArr.randomElement()!), size: CGSize(width: self.size.width/7, height: self.size.height/8), zRotation: 0.4, zPosition: 1)
+        makeBouncer(imageName: "pink-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: 930), size: CGSize(width: self.size.width/12, height: self.size.height/13), zRotation: -0.2, zPosition: 1)
+        makeBouncer(imageName: "pink-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: 640), size: CGSize(width: self.size.width/18, height: self.size.height/19), zRotation: -0.055, zPosition: 1)
+        makeBouncer(imageName: "black-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: 450), size: CGSize(width: self.size.width/14, height: self.size.height/15), zRotation: -0.1, zPosition: 1)
+        makeBouncer(imageName: "black-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: 320), size: CGSize(width: self.size.width/14, height: self.size.height/15), zRotation: -0.1, zPosition: 1)
+        makeBouncer(imageName: "red-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: 200), size: CGSize(width: self.size.width/13, height: self.size.height/14), zRotation: 0.5, zPosition: 1)
+        makeBouncer(imageName: "red-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: 760), size: CGSize(width: self.size.width/15, height: self.size.height/16), zRotation: 0.4, zPosition: 1)
         
         
         makeSlot(position: CGPoint(x: 50, y: 0), markScore: 0)
