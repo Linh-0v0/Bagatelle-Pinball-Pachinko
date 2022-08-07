@@ -32,7 +32,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = self
     
-        makeBouncer(imageName: "pink-loli", position: CGPoint(x: 200, y: 300), size: CGSize(width: self.size.width/5, height: self.size.height/6), zRotation: -1)
+        var randomPositionXArr: [Int] = genRandomNumIncrement(from: 80, to: 680, by: 94)
+        var randomPositionYArr: [Int] = genRandomNumIncrement(from: 170, to: 1000, by: 86)
+        for _ in 1...60 {
+            makeBouncer(imageName: "Plus Symbol-\(Int.random(in: 0..<10))",
+                        position: CGPoint(x: randomPositionXArr.randomElement()!, y: randomPositionYArr.randomElement()!),
+                        size: CGSize(width: self.size.width/19, height: self.size.height/33),
+                        zRotation: Double.random(in: -1..<2), zPosition: 0)
+        }
+
+        makeBouncer(imageName: "pink-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: randomPositionYArr.randomElement()!), size: CGSize(width: self.size.width/5, height: self.size.height/6), zRotation: -0.2, zPosition: 1)
+        makeBouncer(imageName: "pink-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: randomPositionYArr.randomElement()!), size: CGSize(width: self.size.width/6, height: self.size.height/7), zRotation: -0.055, zPosition: 1)
+        makeBouncer(imageName: "black-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: randomPositionYArr.randomElement()!), size: CGSize(width: self.size.width/5, height: self.size.height/6), zRotation: -0.1, zPosition: 1)
+        makeBouncer(imageName: "red-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: randomPositionYArr.randomElement()!), size: CGSize(width: self.size.width/9, height: self.size.height/10), zRotation: 0.5, zPosition: 1)
+        makeBouncer(imageName: "red-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: randomPositionYArr.randomElement()!), size: CGSize(width: self.size.width/7, height: self.size.height/8), zRotation: 0.4, zPosition: 1)
+        
         
         makeSlot(position: CGPoint(x: 50, y: 0), markScore: 0)
         makeSlot(position: CGPoint(x: 160 + 10, y: 0), markScore: 20)
@@ -50,7 +64,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let location = touch.location(in: self)
         
         let ball = SKSpriteNode(imageNamed: "yellow-ball")
-        ball.size = CGSize(width: 50, height: 50)
+        ball.size = CGSize(width: 40, height: 40)
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width/2.0)
         //bounciness
         ball.physicsBody?.restitution = 0.3
@@ -61,9 +75,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(ball)
     }
     
-    func makeBouncer(imageName: String, position: CGPoint, size: CGSize, zRotation: CGFloat) {
+    func makeBouncer(imageName: String, position: CGPoint, size: CGSize, zRotation: CGFloat, zPosition: Int) {
         let bouncer = SKSpriteNode(imageNamed: imageName)
         bouncer.position = position
+        bouncer.zPosition = CGFloat(zPosition)
         bouncer.size = size
         bouncer.name = "bouncer"
         bouncer.zRotation = zRotation
@@ -148,5 +163,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else if nodeB.name == "ball" {
             collisionBetween(ball: nodeB, object: nodeA)
         }
+    }
+    
+    func genRandomNumIncrement(from: Int, to: Int, by: Int) -> [Int] {
+        var randomArr: [Int] = []
+        for i in stride(from: from, to: to, by: by) {
+            randomArr.append(i)
+        }
+        return randomArr
     }
 }
