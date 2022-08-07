@@ -26,7 +26,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
         scoreLabel.text = "Score: 0"
         scoreLabel.horizontalAlignmentMode = .right
-        scoreLabel.position = CGPoint(x: frame.size.width - 100, y: frame.size.height - 100)
+        scoreLabel.position = CGPoint(x: 650, y: 1250)
         addChild(scoreLabel)
         
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
@@ -34,13 +34,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
         makeBouncer(imageName: "pink-loli", position: CGPoint(x: 200, y: 300), size: CGSize(width: self.size.width/5, height: self.size.height/6), zRotation: -1)
         
-        makeSlot(position: CGPoint(x: 100, y: 0), markScore: 0)
-        makeSlot(position: CGPoint(x: 190, y: 0), markScore: 20)
-        makeSlot(position: CGPoint(x: 280, y: 0), markScore: 50)
-        makeSlot(position: CGPoint(x: 370, y: 0), markScore: 100)
-        makeSlot(position: CGPoint(x: 455, y: 0), markScore: 50)
-        makeSlot(position: CGPoint(x: 545, y: 0), markScore: 20)
-        makeSlot(position: CGPoint(x: 635, y: 0), markScore: 0)
+        makeSlot(position: CGPoint(x: 50, y: 0), markScore: 0)
+        makeSlot(position: CGPoint(x: 160 + 10, y: 0), markScore: 20)
+        makeSlot(position: CGPoint(x: 260 + 10, y: 0), markScore: 50)
+        makeSlot(position: CGPoint(x: 360 + 10, y: 0), markScore: 100)
+        makeSlot(position: CGPoint(x: 460 + 10, y: 0), markScore: 50)
+        makeSlot(position: CGPoint(x: 560 + 10, y: 0), markScore: 20)
+        makeSlot(position: CGPoint(x: 680 + 10, y: 0), markScore: 0)
+        
+        print(self.size.width)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -80,25 +82,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         if markScore == 100 {
             slotBase = SKSpriteNode(imageNamed: "rect slot")
-            slotBase.size = CGSize(width: 80, height: 150)
+            slotBase.size = CGSize(width: 90, height: 150)
             slotBase.name = "slot100"
             textScore.text = "100"
             textScore.position = position
         } else if markScore == 50 {
             slotBase = SKSpriteNode(imageNamed: "rect slot")
-            slotBase.size = CGSize(width: 80, height: 150)
+            slotBase.size = CGSize(width: 90, height: 150)
             slotBase.name = "slot50"
             textScore.text = "50"
             textScore.position = position
         } else if markScore == 20 {
             slotBase = SKSpriteNode(imageNamed: "rect slot")
-            slotBase.size = CGSize(width: 80, height: 150)
+            slotBase.size = CGSize(width: 90, height: 150)
             slotBase.name = "slot20"
             textScore.text = "20"
             textScore.position = position
         } else {
             slotBase = SKSpriteNode(imageNamed: "rect slot")
-            slotBase.size = CGSize(width: 90, height: 150)
+            slotBase.size = CGSize(width: 130, height: 150)
             slotBase.name = "slot0"
             textScore.text = "0"
             textScore.position = position
