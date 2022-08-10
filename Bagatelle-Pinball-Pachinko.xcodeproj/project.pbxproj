@@ -16,6 +16,10 @@
 		C4A0C2C6289CE1F60007876E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C2C4289CE1F60007876E /* LaunchScreen.storyboard */; };
 		C4A0C2CD289ED7670007876E /* BokehEffect.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C2CC289ED7670007876E /* BokehEffect.sks */; };
 		C4A0C2D1289ED7800007876E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C2CF289ED7800007876E /* Assets.xcassets */; };
+		C4A0C32B28A22DB20007876E /* WaitingForTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A0C32A28A22DB20007876E /* WaitingForTap.swift */; };
+		C4A0C32D28A22DBC0007876E /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A0C32C28A22DBC0007876E /* GameOver.swift */; };
+		C4A0C32F28A22DCB0007876E /* Playing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A0C32E28A22DCB0007876E /* Playing.swift */; };
+		C4A0C33228A3AD6F0007876E /* Texture.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C33128A3AD6F0007876E /* Texture.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +33,10 @@
 		C4A0C2C5289CE1F60007876E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C4A0C2CC289ED7670007876E /* BokehEffect.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BokehEffect.sks; sourceTree = "<group>"; };
 		C4A0C2CF289ED7800007876E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C4A0C32A28A22DB20007876E /* WaitingForTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingForTap.swift; sourceTree = "<group>"; };
+		C4A0C32C28A22DBC0007876E /* GameOver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOver.swift; sourceTree = "<group>"; };
+		C4A0C32E28A22DCB0007876E /* Playing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playing.swift; sourceTree = "<group>"; };
+		C4A0C33128A3AD6F0007876E /* Texture.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Texture.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,12 +74,24 @@
 				C4A0C2B7289CE1F40007876E /* GameScene.sks */,
 				C4A0C2BB289CE1F40007876E /* GameScene.swift */,
 				C4A0C2BD289CE1F40007876E /* GameViewController.swift */,
+				C4A0C33028A22DD70007876E /* Game States */,
 				C4A0C2BF289CE1F40007876E /* Main.storyboard */,
 				C4A0C2C2289CE1F60007876E /* Assets.xcassets */,
 				C4A0C2C4289CE1F60007876E /* LaunchScreen.storyboard */,
 				C4A0C2CC289ED7670007876E /* BokehEffect.sks */,
+				C4A0C33128A3AD6F0007876E /* Texture.sks */,
 			);
 			path = "Bagatelle-Pinball-Pachinko";
+			sourceTree = "<group>";
+		};
+		C4A0C33028A22DD70007876E /* Game States */ = {
+			isa = PBXGroup;
+			children = (
+				C4A0C32A28A22DB20007876E /* WaitingForTap.swift */,
+				C4A0C32C28A22DBC0007876E /* GameOver.swift */,
+				C4A0C32E28A22DCB0007876E /* Playing.swift */,
+			);
+			path = "Game States";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,6 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4A0C2CD289ED7670007876E /* BokehEffect.sks in Resources */,
+				C4A0C33228A3AD6F0007876E /* Texture.sks in Resources */,
 				C4A0C2C1289CE1F40007876E /* Main.storyboard in Resources */,
 				C4A0C2B8289CE1F40007876E /* GameScene.sks in Resources */,
 				C4A0C2D1289ED7800007876E /* Assets.xcassets in Resources */,
@@ -148,7 +169,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4A0C32F28A22DCB0007876E /* Playing.swift in Sources */,
+				C4A0C32B28A22DB20007876E /* WaitingForTap.swift in Sources */,
 				C4A0C2BC289CE1F40007876E /* GameScene.swift in Sources */,
+				C4A0C32D28A22DBC0007876E /* GameOver.swift in Sources */,
 				C4A0C2BE289CE1F40007876E /* GameViewController.swift in Sources */,
 				C4A0C2B6289CE1F40007876E /* AppDelegate.swift in Sources */,
 			);
