@@ -18,7 +18,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameContinue : Bool = true {
         didSet {
             let gameOver = childNode(withName: "GameMessageName") as! SKSpriteNode
-            //            gameOver.name = "gameOverMessage"
             let textureName = gameContinue ? "you-won" : "game-over"
             let texture = SKTexture(imageNamed: textureName)
             let actionSequence = SKAction.sequence([SKAction.setTexture(texture),
@@ -28,14 +27,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     var isFingerOnbouncer = false
     
-    var betAmount = 10
+    var ballCost = 30
     var scoreLabel, coinLabel, highScoreLabel: SKLabelNode!
     var score = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
         }
     }
-    var coin = 100 {
+    var coin = 150 {
         didSet {
             coinLabel.text = "Coin: \(coin)"
         }
@@ -59,7 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         coinLabel = SKLabelNode(fontNamed: "Chalkduster")
         coinLabel.fontSize = 40
-        coinLabel.text = "Coin: 100"
+        coinLabel.text = "Coin: 150"
         coinLabel.horizontalAlignmentMode = .center
         coinLabel.fontColor = SKColor.white
         coinLabel.position = CGPoint(x: 370, y: 1200)
@@ -127,8 +126,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             isFingerOnbouncer = true
             
         case is Playing:
-            //            let touch = touches.first
-            //            let touchLocation = touch!.location(in: self)
             guard let touch = touches.first else {return}
             let location = touch.location(in: self)
             
@@ -143,7 +140,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 ball.name = "ball"
                 addChild(ball)
                 
-                coin -= 10
+                coin -= ballCost
             }
             
             if let body = physicsWorld.body(at: location) {
@@ -152,11 +149,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
             
-            //        case is GameOver:
-            //            let newScene = GameScene(fileNamed:"GameScene")
-            //            newScene!.scaleMode = .aspectFit
-            //            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            //            self.view?.presentScene(newScene!, transition: reveal)
+            case is GameOver:
+                let newScene = GameScene(fileNamed:"GameScene")
+                newScene!.scaleMode = .aspectFit
+                let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+                self.view?.presentScene(newScene!, transition: reveal)
             
         default:
             break
@@ -261,6 +258,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !isGameContinue() {
                 gameState.enter(GameOver.self)
                 gameContinue = false
+            }
+            
+            if coin < score {
+                coin = score
             }
         }
     }
