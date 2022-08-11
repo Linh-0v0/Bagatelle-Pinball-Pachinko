@@ -28,7 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isFingerOnbouncer = false
     
     var ballCost = 30
-    var scoreLabel, coinLabel, highScoreLabel: SKLabelNode!
+    var scoreLabel, coinLabel, highScoreLabel, gameNotif: SKLabelNode!
     var score = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
@@ -39,6 +39,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             coinLabel.text = "Coin: \(coin)"
         }
     }
+    //    var highScore = 0 {
+    //        didSet {
+    //            highScoreLabel.text = "High Score: \(highScore)"
+    //        }
+    //    }
     
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "background")
@@ -47,6 +52,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         background.blendMode = .replace
         background.zPosition = -1
         addChild(background)
+        
+        let renew = SKSpriteNode(imageNamed: "renew")
+        renew.isUserInteractionEnabled = false
+        renew.position = CGPoint(x: 70, y: frame.size.height - 100)
+        renew.size = CGSize(width: 70, height: 70)
+        renew.zPosition = 10
+        renew.name = "renewButton"
+        addChild(renew)
+        
+        let line = SKSpriteNode(imageNamed: "line")
+        line.isUserInteractionEnabled = false
+        line.position = CGPoint(x: frame.size.width / 2, y: 1005)
+        line.size = CGSize(width: self.size.width, height: 2)
+        line.zPosition = 10
+        line.name = "line"
+        addChild(line)
         
         scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
         scoreLabel.fontSize = 40
@@ -64,13 +85,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coinLabel.position = CGPoint(x: 370, y: 1200)
         addChild(coinLabel)
         
+        
+        
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = self
         
-        var randomPositionXArr: [Int] = genNumIncrement(from: 70, to: 680, by: 120)
-        var randomPositionYArr: [Int] = genNumIncrement(from: 170, to: 1000, by: 97)
+        let randomPositionXArr: [Int] = genNumIncrement(from: 70, to: 680, by: 120)
+        let randomPositionYArr: [Int] = genNumIncrement(from: 170, to: 1000, by: 97)
         var columnNum = 0
-        var numberOfXObjects = randomPositionXArr.capacity
+        let numberOfXObjects = randomPositionXArr.capacity
         
         for y in randomPositionYArr {
             var offsetValue = columnNum % 2 == 0 ? 0 : 50
@@ -97,7 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         makeBouncer(imageName: "pink-loli", position: CGPoint(x: randomPositionXArr.randomElement()! + 40, y: 640), size: CGSize(width: self.size.width/19, height: self.size.height/20), zRotation: -0.055, zPosition: 1)
         makeBouncer(imageName: "black-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: 360), size: CGSize(width: self.size.width/13, height: self.size.height/14), zRotation: -0.1, zPosition: 1)
         makeBouncer(imageName: "red-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: 150), size: CGSize(width: self.size.width/13, height: self.size.height/14), zRotation: 0.5, zPosition: 1)
-
+        
         
         
         makeSlot(position: CGPoint(x: 50, y: 0), markScore: 0)
@@ -128,19 +151,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case is Playing:
             guard let touch = touches.first else {return}
             let location = touch.location(in: self)
+            print(location.y)
+            
+            let touchedNode = atPoint(location)
+            if touchedNode.name == "renewButton" {
+                let newScene = GameScene(fileNamed:"GameScene")
+                newScene!.scaleMode = .aspectFit
+                let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+                self.view?.presentScene(newScene!, transition: reveal)
+            }
             
             if coin > 0 {
-                let ball = SKSpriteNode(imageNamed: "yellow-ball")
-                ball.size = CGSize(width: 40, height: 40)
-                ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width/2.0)
-                //bounciness
-                ball.physicsBody?.restitution = 0.3
-                ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
-                ball.position = location
-                ball.name = "ball"
-                addChild(ball)
-                
-                coin -= ballCost
+                if location.y > 1010 {
+                    let ball = SKSpriteNode(imageNamed: "yellow-ball")
+                    ball.size = CGSize(width: 40, height: 40)
+                    ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width/2.0)
+                    //bounciness
+                    ball.physicsBody?.restitution = 0.3
+                    ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
+                    ball.position = location
+                    ball.name = "ball"
+                    addChild(ball)
+                    
+                    coin -= ballCost
+                }
             }
             
             if let body = physicsWorld.body(at: location) {
@@ -149,11 +183,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
             
-            case is GameOver:
-                let newScene = GameScene(fileNamed:"GameScene")
-                newScene!.scaleMode = .aspectFit
-                let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-                self.view?.presentScene(newScene!, transition: reveal)
+        case is GameOver:
+            let newScene = GameScene(fileNamed:"GameScene")
+            newScene!.scaleMode = .aspectFit
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            self.view?.presentScene(newScene!, transition: reveal)
             
         default:
             break
@@ -263,6 +297,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if coin < score {
                 coin = score
             }
+            
+            
         }
     }
     
