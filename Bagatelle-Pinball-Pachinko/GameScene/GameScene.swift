@@ -27,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     var isFingerOnbouncer = false
     
-    var ballCost = 30
+    var ballCost = 25
     var scoreLabel, coinLabel, highScoreLabel, gameNotif: SKLabelNode!
     var score = 0 {
         didSet {
@@ -61,6 +61,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         renew.name = "renewButton"
         addChild(renew)
         
+        let instruction = SKSpriteNode(imageNamed: "info")
+        instruction.isUserInteractionEnabled = false
+        instruction.position = CGPoint(x: frame.size.width - 70, y: frame.size.height - 100)
+        instruction.size = CGSize(width: 70, height: 70)
+        instruction.zPosition = 10
+        instruction.name = "instructionButton"
+        addChild(instruction)
+        
         let line = SKSpriteNode(imageNamed: "line")
         line.isUserInteractionEnabled = false
         line.position = CGPoint(x: frame.size.width / 2, y: 1005)
@@ -84,8 +92,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coinLabel.fontColor = SKColor.white
         coinLabel.position = CGPoint(x: 370, y: 1200)
         addChild(coinLabel)
-        
-        
         
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = self
@@ -136,24 +142,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameMessage.name = "GameMessageName"
         gameMessage.position = CGPoint(x: frame.midX, y: frame.midY)
         gameMessage.zPosition = 10
-        gameMessage.setScale(0.5)
+        gameMessage.size = CGSize(width: self.size.width - 100, height: 50)
         addChild(gameMessage)
         
         gameState.enter(WaitingForTap.self)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {return}
+        let location = touch.location(in: self)
+        let touchedNode = atPoint(location)
+        
+        if touchedNode.name == "instructionButton" {
+            let instructionScene = Instruction(fileNamed:"Instruction")
+            instructionScene?.scaleMode = .aspectFit
+            let transition = SKTransition.moveIn(with: .down, duration: 1)
+            self.view?.presentScene(instructionScene!, transition: transition)
+        }
+        
         switch gameState.currentState {
         case is WaitingForTap:
             gameState.enter(Playing.self)
             isFingerOnbouncer = true
             
         case is Playing:
-            guard let touch = touches.first else {return}
-            let location = touch.location(in: self)
-            print(location.y)
-            
-            let touchedNode = atPoint(location)
             if touchedNode.name == "renewButton" {
                 let newScene = GameScene(fileNamed:"GameScene")
                 newScene!.scaleMode = .aspectFit
@@ -174,6 +186,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     addChild(ball)
                     
                     coin -= ballCost
+                    
                 }
             }
             
@@ -227,20 +240,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else if markScore == 50 {
             slotBase = SKSpriteNode(imageNamed: "rect slot")
             slotBase.size = CGSize(width: 90, height: 150)
-            slotBase.name = "slot50"
-            textScore.text = "50"
+            slotBase.name = "slot-10"
+            textScore.text = "-10"
             textScore.position = position
         } else if markScore == 20 {
             slotBase = SKSpriteNode(imageNamed: "rect slot")
             slotBase.size = CGSize(width: 90, height: 150)
-            slotBase.name = "slot20"
-            textScore.text = "20"
+            slotBase.name = "slot50"
+            textScore.text = "50"
             textScore.position = position
         } else {
             slotBase = SKSpriteNode(imageNamed: "rect slot")
             slotBase.size = CGSize(width: 130, height: 150)
-            slotBase.name = "slot0"
-            textScore.text = "0"
+            slotBase.name = "slot-25"
+            textScore.text = "-25"
             textScore.position = position
         }
         
@@ -256,16 +269,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if object.name == "slot100" {
             destroy(ball: ball)
             score += 100
+            if coin < score {
+                coin = score
+            }
         } else if object.name == "slot50" {
             destroy(ball: ball)
             score += 50
-        } else if object.name == "slot20" {
+            if coin < score {
+                coin = score
+            }
+        } else if object.name == "slot-10" {
             destroy(ball: ball)
-            score += 20
-        } else if object.name == "slot0" {
+            score -= 10
+        } else if object.name == "slot-25" {
             destroy(ball: ball)
-            score += 0
+            score -= 25
         }
+        
     }
     
     func destroy(ball: SKNode) {
@@ -294,11 +314,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 gameContinue = false
             }
             
-            if coin < score {
-                coin = score
-            }
-            
-            
         }
     }
     
@@ -311,12 +326,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func isGameContinue() -> Bool {
-        //      var numberOfBricks = 0
-        //      self.enumerateChildNodes(withName: BlockCategoryName) {
-        //        node, stop in
-        //        numberOfBricks = numberOfBricks + 1
-        //      }
-        //      return numberOfBricks == 0
         var numberOfBalls = 0
         self.enumerateChildNodes(withName: "ball") {
             node, stop in
