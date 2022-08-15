@@ -17,6 +17,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameOver: SKSpriteNode!
     
     let gameOverSound = SKAction.playSoundFileNamed("game-over", waitForCompletion: false)
+    let gameWonSound = SKAction.playSoundFileNamed("game-won", waitForCompletion: false)
     let tapToPlaySound = SKAction.playSoundFileNamed("tap-start", waitForCompletion: false)
     let clickSound = SKAction.playSoundFileNamed("click", waitForCompletion: false)
     let ballSound = SKAction.playSoundFileNamed("ball-tap", waitForCompletion: false)
@@ -30,8 +31,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let textureName = gameWinOrLose ? (isGameWon() ? "you-won" : "") : "game-over"
             let texture = SKTexture(imageNamed: textureName)
             
-            let actionSequence = SKAction.sequence([gameOverSound, SKAction.setTexture(texture),
-                                                    SKAction.scale(to: 1.0, duration: 0.25)])
+            let actionSequence = SKAction.sequence(
+                [gameWinOrLose ? gameWonSound : gameOverSound,
+                 SKAction.setTexture(texture), SKAction.scale(to: 1.0, duration: 0.25)])
             gameOver.run(actionSequence)
         }
     }

@@ -29,6 +29,7 @@
 		C4A0C35128AAAAF00007876E /* click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C34A28AAAAF00007876E /* click.mp3 */; };
 		C4A0C35228AAAAF00007876E /* score-point.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C34B28AAAAF00007876E /* score-point.mp3 */; };
 		C4A0C35328AAAAF00007876E /* minus-point.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C34C28AAAAF00007876E /* minus-point.mp3 */; };
+		C4A0C35828AADC0F0007876E /* game-won.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C35728AADC0F0007876E /* game-won.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		C4A0C34A28AAAAF00007876E /* click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click.mp3; sourceTree = "<group>"; };
 		C4A0C34B28AAAAF00007876E /* score-point.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "score-point.mp3"; sourceTree = "<group>"; };
 		C4A0C34C28AAAAF00007876E /* minus-point.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "minus-point.mp3"; sourceTree = "<group>"; };
+		C4A0C35728AADC0F0007876E /* game-won.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "game-won.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 				C4A0C34628AAAAF00007876E /* ball-tap.mp3 */,
 				C4A0C34A28AAAAF00007876E /* click.mp3 */,
 				C4A0C34828AAAAF00007876E /* game-over.mp3 */,
+				C4A0C35728AADC0F0007876E /* game-won.mp3 */,
 				C4A0C34B28AAAAF00007876E /* score-point.mp3 */,
 				C4A0C34928AAAAF00007876E /* score-100.mp3 */,
 				C4A0C34C28AAAAF00007876E /* minus-point.mp3 */,
@@ -208,6 +211,7 @@
 				C4A0C33228A3AD6F0007876E /* Texture.sks in Resources */,
 				C4A0C35328AAAAF00007876E /* minus-point.mp3 in Resources */,
 				C4A0C35128AAAAF00007876E /* click.mp3 in Resources */,
+				C4A0C35828AADC0F0007876E /* game-won.mp3 in Resources */,
 				C4A0C2C1289CE1F40007876E /* Main.storyboard in Resources */,
 				C4A0C2B8289CE1F40007876E /* GameScene.sks in Resources */,
 				C4A0C35028AAAAF00007876E /* score-100.mp3 in Resources */,
