@@ -15,12 +15,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         Playing(scene: self),
         GameOver(scene: self)])
     var gameOver: SKSpriteNode!
-    var gameContinue : Bool = true {
+    
+    let gameOverSound = SKAction.playSoundFileNamed("game-over", waitForCompletion: false)
+    let tapToPlaySound = SKAction.playSoundFileNamed("tap-start", waitForCompletion: false)
+    let clickSound = SKAction.playSoundFileNamed("click", waitForCompletion: false)
+    let ballSound = SKAction.playSoundFileNamed("ball-tap", waitForCompletion: false)
+    let slot100Sound = SKAction.playSoundFileNamed("score-100", waitForCompletion: false)
+    let slotScorePointSound = SKAction.playSoundFileNamed("score-point", waitForCompletion: false)
+    let slotMinusSound = SKAction.playSoundFileNamed("minus-point", waitForCompletion: false)
+    
+    var gameWinOrLose : Bool = true {
         didSet {
             let gameOver = childNode(withName: "GameMessageName") as! SKSpriteNode
-            let textureName = gameContinue ? "you-won" : "game-over"
+            let textureName = gameWinOrLose ? (isGameWon() ? "you-won" : "") : "game-over"
             let texture = SKTexture(imageNamed: textureName)
-            let gameOverSound = SKAction.playSoundFileNamed("game-over", waitForCompletion: false)
+            
             let actionSequence = SKAction.sequence([gameOverSound, SKAction.setTexture(texture),
                                                     SKAction.scale(to: 1.0, duration: 0.25)])
             gameOver.run(actionSequence)
@@ -28,14 +37,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     var isFingerOnbouncer = false
     
-    var ballCost = 18
+    var ballCost = 25
     var scoreLabel, coinLabel, highScoreLabel, gameNotif: SKLabelNode!
     var score = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
         }
     }
-    var coin = 90 {
+    var coin = 125 {
         didSet {
             coinLabel.text = "Coin: \(coin)"
         }
@@ -88,7 +97,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         coinLabel = SKLabelNode(fontNamed: "Chalkduster")
         coinLabel.fontSize = 40
-        coinLabel.text = "Coin: 90"
+        coinLabel.text = "Coin: 125"
         coinLabel.horizontalAlignmentMode = .center
         coinLabel.fontColor = SKColor.white
         coinLabel.position = CGPoint(x: 370, y: 1200)
@@ -144,7 +153,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameMessage.position = CGPoint(x: frame.midX, y: frame.midY)
         gameMessage.zPosition = 10
         gameMessage.size = CGSize(width: self.size.width - 100, height: 50)
-        let tapToPlaySound = SKAction.playSoundFileNamed("tap-start", waitForCompletion: false)
+        
         gameMessage.run(tapToPlaySound)
         addChild(gameMessage)
         
@@ -157,7 +166,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let touchedNode = atPoint(location)
         
         if touchedNode.name == "instructionButton" {
-            let clickSound = SKAction.playSoundFileNamed("click", waitForCompletion: false)
+            
             touchedNode.run(clickSound)
             let instructionScene = Instruction(fileNamed:"Instruction")
             instructionScene?.scaleMode = .aspectFit
@@ -172,7 +181,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         case is Playing:
             if touchedNode.name == "renewButton" {
-                let clickSound = SKAction.playSoundFileNamed("click", waitForCompletion: false)
                 touchedNode.run(clickSound)
                 let newScene = GameScene(fileNamed:"GameScene")
                 newScene!.scaleMode = .aspectFit
@@ -190,7 +198,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
                     ball.position = location
                     ball.name = "ball"
-                    let ballSound = SKAction.playSoundFileNamed("ball-tap", waitForCompletion: false)
                     ball.run(ballSound)
                     addChild(ball)
                     
@@ -277,32 +284,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func collisionBetween(ball: SKNode, object: SKNode) {
         if object.name == "slot100" {
             destroy(ball: ball)
-            let slotSound = SKAction.playSoundFileNamed("score-100", waitForCompletion: false)
-            object.run(slotSound)
+            object.run(slot100Sound)
             score += 100
             if coin < score {
                 coin = score
             }
         } else if object.name == "slot50" {
             destroy(ball: ball)
-            let slotSound = SKAction.playSoundFileNamed("score-point", waitForCompletion: false)
-            object.run(slotSound)
+            object.run(slotScorePointSound)
             score += 50
             if coin < score {
                 coin = score
             }
         } else if object.name == "slot-10" {
             destroy(ball: ball)
-            let slotSound = SKAction.playSoundFileNamed("minus-point", waitForCompletion: false)
-            object.run(slotSound)
+            object.run(slotMinusSound)
             score -= 10
         } else if object.name == "slot-25" {
             destroy(ball: ball)
-            let slotSound = SKAction.playSoundFileNamed("minus-point", waitForCompletion: false)
-            object.run(slotSound)
+            object.run(slotMinusSound)
             score -= 25
         }
-        
     }
     
     func destroy(ball: SKNode) {
@@ -328,9 +330,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             if !isGameContinue() {
                 gameState.enter(GameOver.self)
-                gameContinue = false
+                gameWinOrLose = false
             }
             
+            if isGameWon() {
+              gameState.enter(GameOver.self)
+              gameWinOrLose = true
+            }
         }
     }
     
@@ -348,10 +354,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             node, stop in
             numberOfBalls = numberOfBalls + 1
         }
-        if coin == 0 && numberOfBalls == 0{
+        if (coin == 0 && numberOfBalls == 0) {
+//            LOSE
             return false
         } else {
+//            CONTINUE
             return true
+        }
+    }
+    
+    func isGameWon() -> Bool {
+        if score == 1000 {
+            return true
+        } else {
+            return false
         }
     }
 }
