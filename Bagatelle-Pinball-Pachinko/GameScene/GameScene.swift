@@ -20,21 +20,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let gameOver = childNode(withName: "GameMessageName") as! SKSpriteNode
             let textureName = gameContinue ? "you-won" : "game-over"
             let texture = SKTexture(imageNamed: textureName)
-            let actionSequence = SKAction.sequence([SKAction.setTexture(texture),
+            let gameOverSound = SKAction.playSoundFileNamed("game-over", waitForCompletion: false)
+            let actionSequence = SKAction.sequence([gameOverSound, SKAction.setTexture(texture),
                                                     SKAction.scale(to: 1.0, duration: 0.25)])
             gameOver.run(actionSequence)
         }
     }
     var isFingerOnbouncer = false
     
-    var ballCost = 25
+    var ballCost = 18
     var scoreLabel, coinLabel, highScoreLabel, gameNotif: SKLabelNode!
     var score = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
         }
     }
-    var coin = 150 {
+    var coin = 90 {
         didSet {
             coinLabel.text = "Coin: \(coin)"
         }
@@ -87,7 +88,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         coinLabel = SKLabelNode(fontNamed: "Chalkduster")
         coinLabel.fontSize = 40
-        coinLabel.text = "Coin: 150"
+        coinLabel.text = "Coin: 90"
         coinLabel.horizontalAlignmentMode = .center
         coinLabel.fontColor = SKColor.white
         coinLabel.position = CGPoint(x: 370, y: 1200)
@@ -108,7 +109,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     makeBouncer(imageName: "Plus Symbol-\(Int.random(in: 0..<10))",
                                 position: CGPoint(x: x + offsetValue, y: y),
                                 size: CGSize(width: self.size.width/19, height: self.size.height/33),
-                                zRotation: Double.random(in: -0.5..<0.25), zPosition: 0)
+                                zRotation: Double.random(in: -0.5..<0.5), zPosition: 0)
                 }
             } else {
                 for x in randomPositionXArr[0..<numberOfXObjects - 3] {
@@ -143,6 +144,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameMessage.position = CGPoint(x: frame.midX, y: frame.midY)
         gameMessage.zPosition = 10
         gameMessage.size = CGSize(width: self.size.width - 100, height: 50)
+        let tapToPlaySound = SKAction.playSoundFileNamed("tap-start", waitForCompletion: false)
+        gameMessage.run(tapToPlaySound)
         addChild(gameMessage)
         
         gameState.enter(WaitingForTap.self)
@@ -154,6 +157,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let touchedNode = atPoint(location)
         
         if touchedNode.name == "instructionButton" {
+            let clickSound = SKAction.playSoundFileNamed("click", waitForCompletion: false)
+            touchedNode.run(clickSound)
             let instructionScene = Instruction(fileNamed:"Instruction")
             instructionScene?.scaleMode = .aspectFit
             let transition = SKTransition.moveIn(with: .down, duration: 1)
@@ -167,6 +172,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         case is Playing:
             if touchedNode.name == "renewButton" {
+                let clickSound = SKAction.playSoundFileNamed("click", waitForCompletion: false)
+                touchedNode.run(clickSound)
                 let newScene = GameScene(fileNamed:"GameScene")
                 newScene!.scaleMode = .aspectFit
                 let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
@@ -183,6 +190,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
                     ball.position = location
                     ball.name = "ball"
+                    let ballSound = SKAction.playSoundFileNamed("ball-tap", waitForCompletion: false)
+                    ball.run(ballSound)
                     addChild(ball)
                     
                     coin -= ballCost
@@ -268,21 +277,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func collisionBetween(ball: SKNode, object: SKNode) {
         if object.name == "slot100" {
             destroy(ball: ball)
+            let slotSound = SKAction.playSoundFileNamed("score-100", waitForCompletion: false)
+            object.run(slotSound)
             score += 100
             if coin < score {
                 coin = score
             }
         } else if object.name == "slot50" {
             destroy(ball: ball)
+            let slotSound = SKAction.playSoundFileNamed("score-point", waitForCompletion: false)
+            object.run(slotSound)
             score += 50
             if coin < score {
                 coin = score
             }
         } else if object.name == "slot-10" {
             destroy(ball: ball)
+            let slotSound = SKAction.playSoundFileNamed("minus-point", waitForCompletion: false)
+            object.run(slotSound)
             score -= 10
         } else if object.name == "slot-25" {
             destroy(ball: ball)
+            let slotSound = SKAction.playSoundFileNamed("minus-point", waitForCompletion: false)
+            object.run(slotSound)
             score -= 25
         }
         

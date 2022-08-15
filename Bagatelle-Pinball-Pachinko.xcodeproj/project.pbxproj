@@ -22,6 +22,14 @@
 		C4A0C33228A3AD6F0007876E /* Texture.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C33128A3AD6F0007876E /* Texture.sks */; };
 		C4A0C34028A5779B0007876E /* Instruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A0C33F28A5779B0007876E /* Instruction.swift */; };
 		C4A0C34228A578870007876E /* Instruction.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C34128A578870007876E /* Instruction.sks */; };
+		C4A0C34D28AAAAF00007876E /* ball-tap.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C34628AAAAF00007876E /* ball-tap.mp3 */; };
+		C4A0C34E28AAAAF00007876E /* tap-start.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C34728AAAAF00007876E /* tap-start.mp3 */; };
+		C4A0C34F28AAAAF00007876E /* game-over.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C34828AAAAF00007876E /* game-over.mp3 */; };
+		C4A0C35028AAAAF00007876E /* score-100.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C34928AAAAF00007876E /* score-100.mp3 */; };
+		C4A0C35128AAAAF00007876E /* click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C34A28AAAAF00007876E /* click.mp3 */; };
+		C4A0C35228AAAAF00007876E /* score-point.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C34B28AAAAF00007876E /* score-point.mp3 */; };
+		C4A0C35328AAAAF00007876E /* minus-point.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C34C28AAAAF00007876E /* minus-point.mp3 */; };
+		C4A0C35628AAAD990007876E /* PlaySound.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A0C35528AAAD990007876E /* PlaySound.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +49,14 @@
 		C4A0C33128A3AD6F0007876E /* Texture.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Texture.sks; sourceTree = "<group>"; };
 		C4A0C33F28A5779B0007876E /* Instruction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instruction.swift; sourceTree = "<group>"; };
 		C4A0C34128A578870007876E /* Instruction.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Instruction.sks; sourceTree = "<group>"; };
+		C4A0C34628AAAAF00007876E /* ball-tap.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "ball-tap.mp3"; sourceTree = "<group>"; };
+		C4A0C34728AAAAF00007876E /* tap-start.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "tap-start.mp3"; sourceTree = "<group>"; };
+		C4A0C34828AAAAF00007876E /* game-over.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "game-over.mp3"; sourceTree = "<group>"; };
+		C4A0C34928AAAAF00007876E /* score-100.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "score-100.mp3"; sourceTree = "<group>"; };
+		C4A0C34A28AAAAF00007876E /* click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click.mp3; sourceTree = "<group>"; };
+		C4A0C34B28AAAAF00007876E /* score-point.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "score-point.mp3"; sourceTree = "<group>"; };
+		C4A0C34C28AAAAF00007876E /* minus-point.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "minus-point.mp3"; sourceTree = "<group>"; };
+		C4A0C35528AAAD990007876E /* PlaySound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySound.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +95,8 @@
 				C4A0C34428A579440007876E /* GameScene */,
 				C4A0C34328A5792E0007876E /* Instruction */,
 				C4A0C33028A22DD70007876E /* Game States */,
+				C4A0C35428AAAD810007876E /* Helper */,
+				C4A0C34528AAAAD30007876E /* Sound */,
 				C4A0C2BF289CE1F40007876E /* Main.storyboard */,
 				C4A0C2C2289CE1F60007876E /* Assets.xcassets */,
 				C4A0C2C4289CE1F60007876E /* LaunchScreen.storyboard */,
@@ -114,6 +132,28 @@
 				C4A0C2BB289CE1F40007876E /* GameScene.swift */,
 			);
 			path = GameScene;
+			sourceTree = "<group>";
+		};
+		C4A0C34528AAAAD30007876E /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				C4A0C34628AAAAF00007876E /* ball-tap.mp3 */,
+				C4A0C34A28AAAAF00007876E /* click.mp3 */,
+				C4A0C34828AAAAF00007876E /* game-over.mp3 */,
+				C4A0C34B28AAAAF00007876E /* score-point.mp3 */,
+				C4A0C34928AAAAF00007876E /* score-100.mp3 */,
+				C4A0C34C28AAAAF00007876E /* minus-point.mp3 */,
+				C4A0C34728AAAAF00007876E /* tap-start.mp3 */,
+			);
+			path = Sound;
+			sourceTree = "<group>";
+		};
+		C4A0C35428AAAD810007876E /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				C4A0C35528AAAD990007876E /* PlaySound.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,9 +217,16 @@
 				C4A0C34228A578870007876E /* Instruction.sks in Resources */,
 				C4A0C2CD289ED7670007876E /* BokehEffect.sks in Resources */,
 				C4A0C33228A3AD6F0007876E /* Texture.sks in Resources */,
+				C4A0C35328AAAAF00007876E /* minus-point.mp3 in Resources */,
+				C4A0C35128AAAAF00007876E /* click.mp3 in Resources */,
 				C4A0C2C1289CE1F40007876E /* Main.storyboard in Resources */,
 				C4A0C2B8289CE1F40007876E /* GameScene.sks in Resources */,
+				C4A0C35028AAAAF00007876E /* score-100.mp3 in Resources */,
 				C4A0C2D1289ED7800007876E /* Assets.xcassets in Resources */,
+				C4A0C34F28AAAAF00007876E /* game-over.mp3 in Resources */,
+				C4A0C34D28AAAAF00007876E /* ball-tap.mp3 in Resources */,
+				C4A0C35228AAAAF00007876E /* score-point.mp3 in Resources */,
+				C4A0C34E28AAAAF00007876E /* tap-start.mp3 in Resources */,
 				C4A0C2C3289CE1F60007876E /* Assets.xcassets in Resources */,
 				C4A0C2C6289CE1F60007876E /* LaunchScreen.storyboard in Resources */,
 			);
@@ -193,6 +240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4A0C32F28A22DCB0007876E /* Playing.swift in Sources */,
+				C4A0C35628AAAD990007876E /* PlaySound.swift in Sources */,
 				C4A0C32B28A22DB20007876E /* WaitingForTap.swift in Sources */,
 				C4A0C2BC289CE1F40007876E /* GameScene.swift in Sources */,
 				C4A0C34028A5779B0007876E /* Instruction.swift in Sources */,
