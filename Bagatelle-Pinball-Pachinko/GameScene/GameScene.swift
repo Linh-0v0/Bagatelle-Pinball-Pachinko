@@ -9,13 +9,14 @@ import SpriteKit
 import GameKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    
+    // MARK: - GAME STATES
     lazy var gameState: GKStateMachine = GKStateMachine(states: [
         WaitingForTap(scene: self),
         Playing(scene: self),
         GameOver(scene: self)])
     var gameOver: SKSpriteNode!
     
+    // MARK: - SOUND
     let gameOverSound = SKAction.playSoundFileNamed("game-over", waitForCompletion: false)
     let gameWonSound = SKAction.playSoundFileNamed("game-won", waitForCompletion: false)
     let tapToPlaySound = SKAction.playSoundFileNamed("tap-start", waitForCompletion: false)
@@ -25,6 +26,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let slotScorePointSound = SKAction.playSoundFileNamed("score-point", waitForCompletion: false)
     let slotMinusSound = SKAction.playSoundFileNamed("minus-point", waitForCompletion: false)
     
+    // MARK: - WIN/LOSE STATE
     var gameWinOrLose : Bool = true {
         didSet {
             let gameOver = childNode(withName: "GameMessageName") as! SKSpriteNode
@@ -39,6 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     var isFingerOnbouncer = false
     
+    // MARK: - GAME VARIABLES
     var ballCost = 25
     var scoreLabel, coinLabel, highScoreLabel, gameNotif: SKLabelNode!
     var score = 0 {
@@ -57,6 +60,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //        }
     //    }
     
+    // MARK: - GAME OBJECTS BUILD
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "background")
         background.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
@@ -112,7 +116,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let randomPositionYArr: [Int] = genNumIncrement(from: 170, to: 1000, by: 97)
         var columnNum = 0
         let numberOfXObjects = randomPositionXArr.capacity
-        
+        //Plus (+) Objects
         for y in randomPositionYArr {
             var offsetValue = columnNum % 2 == 0 ? 0 : 50
             if columnNum % 2 == 0 {
@@ -132,7 +136,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             columnNum += 1
         }
-        
+        // Lolipop Objects
         makeBouncer(imageName: "pink-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: 950), size: CGSize(width: self.size.width/12, height: self.size.height/13), zRotation: -0.2, zPosition: 1)
         makeBouncer(imageName: "red-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: 760), size: CGSize(width: self.size.width/17, height: self.size.height/18), zRotation: 0.4, zPosition: 1)
         makeBouncer(imageName: "pink-loli", position: CGPoint(x: randomPositionXArr.randomElement()! + 40, y: 640), size: CGSize(width: self.size.width/19, height: self.size.height/20), zRotation: -0.055, zPosition: 1)
@@ -140,7 +144,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         makeBouncer(imageName: "red-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: 150), size: CGSize(width: self.size.width/13, height: self.size.height/14), zRotation: 0.5, zPosition: 1)
         
         
-        
+        // Score Slot Objects
         makeSlot(position: CGPoint(x: 50, y: 0), markScore: 0)
         makeSlot(position: CGPoint(x: 160 + 10, y: 0), markScore: 20)
         makeSlot(position: CGPoint(x: 260 + 10, y: 0), markScore: 50)
@@ -149,26 +153,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         makeSlot(position: CGPoint(x: 560 + 10, y: 0), markScore: 20)
         makeSlot(position: CGPoint(x: 680 + 10, y: 0), markScore: 0)
         
-        //        TAP TO PLAY
+        // Tap To Play
         let gameMessage = SKSpriteNode(imageNamed: "tap-to-play")
         gameMessage.name = "GameMessageName"
         gameMessage.position = CGPoint(x: frame.midX, y: frame.midY)
         gameMessage.zPosition = 10
         gameMessage.size = CGSize(width: self.size.width - 100, height: 50)
-        
         gameMessage.run(tapToPlaySound)
         addChild(gameMessage)
         
         gameState.enter(WaitingForTap.self)
     }
     
+    // MARK: - ACTIONS WHEN TOUCH
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {return}
         let location = touch.location(in: self)
         let touchedNode = atPoint(location)
         
+        // When touch the "Instruction" button, open the "Instruction" view scene
         if touchedNode.name == "instructionButton" {
-            
             touchedNode.run(clickSound)
             let instructionScene = Instruction(fileNamed:"Instruction")
             instructionScene?.scaleMode = .aspectFit
@@ -176,12 +180,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.view?.presentScene(instructionScene!, transition: transition)
         }
         
+        // Different game actions when screen touch based on the GAME STATES
         switch gameState.currentState {
         case is WaitingForTap:
             gameState.enter(Playing.self)
             isFingerOnbouncer = true
             
         case is Playing:
+            // Renew game when "Renew button" is touched
             if touchedNode.name == "renewButton" {
                 touchedNode.run(clickSound)
                 let newScene = GameScene(fileNamed:"GameScene")
@@ -189,7 +195,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
                 self.view?.presentScene(newScene!, transition: reveal)
             }
-            
+            // When player has coins, and ball is only allowed to drop in specific field (above the white line)
             if coin > 0 {
                 if location.y > 1010 {
                     let ball = SKSpriteNode(imageNamed: "yellow-ball")
@@ -203,8 +209,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     ball.run(ballSound)
                     addChild(ball)
                     
+                    // Coin is substracted for each ball
                     coin -= ballCost
-                    
                 }
             }
             
@@ -213,7 +219,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     isFingerOnbouncer = true
                 }
             }
-            
+        // Renew the game when Game Over (run this GameScene file again)
         case is GameOver:
             let newScene = GameScene(fileNamed:"GameScene")
             newScene!.scaleMode = .aspectFit
@@ -225,10 +231,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    override func update(_ currentTime: TimeInterval) {
-        gameState.update(deltaTime: currentTime)
-    }
+//    override func update(_ currentTime: TimeInterval) {
+//        gameState.update(deltaTime: currentTime)
+//    }
     
+    // MARK: - BOUNCER (GAME OBJECTS)
     func makeBouncer(imageName: String, position: CGPoint, size: CGSize, zRotation: CGFloat, zPosition: Int) {
         let bouncer = SKSpriteNode(imageNamed: imageName)
         bouncer.position = position
@@ -238,11 +245,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bouncer.zRotation = zRotation
         bouncer.physicsBody = SKPhysicsBody(texture: bouncer.texture!, size: bouncer
             .size)
-        //        when collides, the object with 'isDynamic=false' won't move
+        // When collides, the object with 'isDynamic=false' won't move
         bouncer.physicsBody?.isDynamic = false
         addChild(bouncer)
     }
     
+    // MARK: - SCORE/POINT SLOT
     func makeSlot(position: CGPoint, markScore: Int) {
         var slotBase: SKSpriteNode
         let textScore = SKLabelNode(fontNamed: "Chalkduster")
@@ -283,6 +291,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(textScore)
     }
     
+    // MARK: - ACTIONS IN COLLISION
     func collisionBetween(ball: SKNode, object: SKNode) {
         if object.name == "slot100" {
             destroy(ball: ball)
@@ -309,6 +318,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    // DESTROY BALL
     func destroy(ball: SKNode) {
         if let bokehParticle = SKEmitterNode(fileNamed: "BokehEffect") {
             bokehParticle.position = ball.position
@@ -318,23 +328,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.removeFromParent()
     }
     
+    // MARK: - didBegin RUNS ALL THE TIME
     func didBegin(_ contact: SKPhysicsContact) {
         if gameState.currentState is Playing {
-            // Previous code remains here...
             guard let nodeA = contact.bodyA.node else { return }
             guard let nodeB = contact.bodyB.node else { return }
             
+            // When Ball collides with other Objects
             if nodeA.name == "ball" {
                 collisionBetween(ball: nodeA, object: nodeB)
             } else if nodeB.name == "ball" {
                 collisionBetween(ball: nodeB, object: nodeA)
             }
             
+            // Game stops when Game Over
             if !isGameContinue() {
                 gameState.enter(GameOver.self)
                 gameWinOrLose = false
             }
             
+            // Game stops when Won
             if isGameWon() {
               gameState.enter(GameOver.self)
               gameWinOrLose = true
@@ -342,22 +355,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    // MARK: - OTHER CONDITION METHODS
+    // Generate Array for Objects Position
     func genNumIncrement(from: Int, to: Int, by: Int) -> [Int] {
-        var randomArr: [Int] = []
+        var Arr: [Int] = []
         for i in stride(from: from, to: to, by: by) {
-            randomArr.append(i)
+            Arr.append(i)
         }
-        return randomArr
+        return Arr
     }
     
+    // Check if the Game should be continued
     func isGameContinue() -> Bool {
         var numberOfBalls = 0
+        // Check if there is any Ball staying at the moment
         self.enumerateChildNodes(withName: "ball") {
             node, stop in
             numberOfBalls = numberOfBalls + 1
         }
-        if (coin == 0 && numberOfBalls == 0) {
-//            LOSE
+        if (coin <= 0 && numberOfBalls == 0) {
+//            LOSE when Out of Coin and No Ball is left on the screen
             return false
         } else {
 //            CONTINUE
@@ -365,6 +382,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    // Win when Score = 1000
     func isGameWon() -> Bool {
         if score == 1000 {
             return true

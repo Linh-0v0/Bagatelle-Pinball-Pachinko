@@ -12,17 +12,9 @@ class Instruction: SKScene {
     var title, detail: SKLabelNode!
     
     override func didMove(to view: SKView) {
-        //        let whiteBg = SKSpriteNode(imageNamed: "whiteBg")
-        //        whiteBg.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
-        //        whiteBg.size = CGSize(width: self.size.width, height: 900)
-        //        whiteBg.blendMode = .replace
-        //        whiteBg.zPosition = 100
-        //        self.addChild(whiteBg)
         self.backgroundColor = SKColor.black
         
-        let appDetailY: Int = 770
-        let appDetailSize: CGFloat = 32
-        
+        // Go back Arrow
         let leftArrow = SKSpriteNode(imageNamed: "left arrow")
         leftArrow.name = "leftArrow"
         leftArrow.position = CGPoint(x: 60, y: self.size.height - 20)
