@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C4535F7A28B2B5190001D0ED /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4535F7928B2B5190001D0ED /* CustomScrollView.swift */; };
 		C4A0C2B6289CE1F40007876E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A0C2B5289CE1F40007876E /* AppDelegate.swift */; };
 		C4A0C2B8289CE1F40007876E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C2B7289CE1F40007876E /* GameScene.sks */; };
 		C4A0C2BC289CE1F40007876E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A0C2BB289CE1F40007876E /* GameScene.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C4535F7928B2B5190001D0ED /* CustomScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
 		C4A0C2B2289CE1F40007876E /* Bagatelle-Pinball-Pachinko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bagatelle-Pinball-Pachinko.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4A0C2B5289CE1F40007876E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C4A0C2B7289CE1F40007876E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -82,6 +84,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C4535F7828B2B4DA0001D0ED /* ScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				C4535F7928B2B5190001D0ED /* CustomScrollView.swift */,
+			);
+			path = ScrollView;
+			sourceTree = "<group>";
+		};
 		C4A0C2A9289CE1F40007876E = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +120,7 @@
 				C4F46C0528AFEE5700C657B9 /* Leaderboard */,
 				C4A0C36928AC100A0007876E /* Username */,
 				C4A0C33028A22DD70007876E /* Game States */,
+				C4535F7828B2B4DA0001D0ED /* ScrollView */,
 				C4A0C34528AAAAD30007876E /* Sound */,
 				C4A0C2BF289CE1F40007876E /* Main.storyboard */,
 				C4A0C2C2289CE1F60007876E /* Assets.xcassets */,
@@ -270,6 +281,7 @@
 			files = (
 				C4A0C32F28A22DCB0007876E /* Playing.swift in Sources */,
 				C4A0C32B28A22DB20007876E /* WaitingForTap.swift in Sources */,
+				C4535F7A28B2B5190001D0ED /* CustomScrollView.swift in Sources */,
 				C4F46C0928AFEEA400C657B9 /* Leaderboard.swift in Sources */,
 				C4A0C37328AC137B0007876E /* UsernameField.swift in Sources */,
 				C4A0C2BC289CE1F40007876E /* GameScene.swift in Sources */,

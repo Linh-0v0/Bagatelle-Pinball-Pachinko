@@ -12,6 +12,7 @@ class Instruction: SKScene {
     var title, detail: SKLabelNode!
     
     override func didMove(to view: SKView) {
+        CustomScrollView.disable()
         self.backgroundColor = SKColor.black
         
         // Go back Arrow

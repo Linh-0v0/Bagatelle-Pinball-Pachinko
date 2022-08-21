@@ -27,6 +27,7 @@ class UsernameField: SKScene, UITextFieldDelegate {
         }()
 
     override func didMove(to view: SKView) {
+        CustomScrollView.disable()
         self.backgroundColor = SKColor.black
         
         let logo = SKSpriteNode(imageNamed: "game-logo")

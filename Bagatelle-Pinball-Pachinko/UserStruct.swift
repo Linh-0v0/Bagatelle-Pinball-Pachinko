@@ -63,8 +63,6 @@ struct Defaults {
                 allUsersArr[data.key] = [data.value]
             }
         }
-        print("*******AllUserArr")
-        print(allUsersArr)
         return allUsersArr
     }
     

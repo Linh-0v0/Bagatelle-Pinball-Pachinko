@@ -59,6 +59,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: - GAME OBJECTS BUILD
     override func didMove(to view: SKView) {
+        CustomScrollView.disable()
+        
         let background = SKSpriteNode(imageNamed: "background")
         background.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
         background.size = CGSize(width: self.size.width, height: self.size.height)
@@ -222,6 +224,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if touchedNode.name == "leaderboardButton" {
             touchedNode.run(clickSound)
+            print("Touch Leaderboard")
             
             let newScene = Leaderboard(fileNamed:"Leaderboard")
            newScene!.scaleMode = .aspectFit

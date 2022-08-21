@@ -8,15 +8,25 @@
 import SpriteKit
 
 class Leaderboard: SKScene {
-    
     var title, colName, usernameCol, scoreCol, ballCol: SKLabelNode!
     var leaderBoardList: [String:[Any]] = Defaults.getLeaderboardList()
     var XPositionValue: CGFloat = 80
     var YPositionValue: CGFloat = 950
     var spaceBtwCol: CGFloat = 350
     
+    weak var scrollView: CustomScrollView!
+    let moveableNode = SKNode()
+    
     override func didMove(to view: SKView) {
+        CustomScrollView.enable()
         self.backgroundColor = SKColor.black
+        
+        // SCROLL VIEW
+        scrollView = CustomScrollView(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height - 400), scene: self, scrollDirection: .vertical, moveableNode: moveableNode)
+        scrollView.contentSize = CGSize(width: self.frame.size.width, height: self.frame.size.height*2)
+        self.view!.addSubview(scrollView)
+
+        addChild(moveableNode)
         
         // Go back Arrow
         let leftArrow = SKSpriteNode(imageNamed: "left arrow")
@@ -44,7 +54,6 @@ class Leaderboard: SKScene {
             leaderboardData(username: String(data.key), score: UserScore, ball: UserBall, YPosition: YPositionValue)
             
             YPositionValue -= 120
-//            print("name: \(data.key), score: \(UserScore), ball: \(UserBall)")
         }
     }
     
@@ -58,6 +67,8 @@ class Leaderboard: SKScene {
             gameScene?.scaleMode = .aspectFit
             let transition = SKTransition.moveIn(with: .left, duration: 1)
             self.view?.presentScene(gameScene!, transition: transition)
+            
+            scrollView.removeFromSuperview()
         }
     }
     
@@ -80,21 +91,24 @@ class Leaderboard: SKScene {
         usernameCol.horizontalAlignmentMode = .left
         usernameCol.fontSize = 35
         usernameCol.position = CGPoint(x: XPositionValue, y: YPosition)
-        addChild(usernameCol)
+        moveableNode.addChild(usernameCol)
+        
+//        label1.position.y = CGRectGetMidY(self.frame) - self.frame.size.height
+//        moveableNode.addChild(label1)
         
         scoreCol = SKLabelNode(fontNamed: "Chalkduster")
         scoreCol.text = score
         scoreCol.horizontalAlignmentMode = .left
         scoreCol.fontSize = 35
         scoreCol.position = CGPoint(x: XPositionValue + spaceBtwCol, y: YPosition)
-        addChild(scoreCol)
+        moveableNode.addChild(scoreCol)
         
         ballCol = SKLabelNode(fontNamed: "Chalkduster")
         ballCol.text = ball
         ballCol.horizontalAlignmentMode = .left
         ballCol.fontSize = 35
         ballCol.position = CGPoint(x: XPositionValue + spaceBtwCol*2 - 160, y: YPosition)
-        addChild(ballCol)
+        moveableNode.addChild(ballCol)
     }
     
 }
