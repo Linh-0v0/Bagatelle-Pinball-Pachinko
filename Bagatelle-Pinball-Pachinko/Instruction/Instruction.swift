@@ -32,6 +32,19 @@ class Instruction: SKScene {
                         detailPosition: CGPoint(x: 100, y: 200))
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {return}
+        let location = touch.location(in: self)
+        let touchedNode = atPoint(location)
+        
+        if touchedNode.name == "leftArrow" {
+            let gameScene = GameScene(fileNamed:"GameScene")
+            gameScene?.scaleMode = .aspectFit
+            let transition = SKTransition.moveIn(with: .left, duration: 1)
+            self.view?.presentScene(gameScene!, transition: transition)
+        }
+    }
+    
     func instructSection(titleStr: String, titlePosition: CGPoint, detailStr: String, detailPosition: CGPoint) {
         title = SKLabelNode(fontNamed: "Chalkduster")
         title.text = titleStr
@@ -48,18 +61,5 @@ class Instruction: SKScene {
         detail.horizontalAlignmentMode = .left
         detail.position = detailPosition
         addChild(detail)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else {return}
-        let location = touch.location(in: self)
-        let touchedNode = atPoint(location)
-        
-        if touchedNode.name == "leftArrow" {
-            let gameScene = GameScene(fileNamed:"GameScene")
-            gameScene?.scaleMode = .aspectFit
-            let transition = SKTransition.moveIn(with: .left, duration: 1)
-            self.view?.presentScene(gameScene!, transition: transition)
-        }
     }
 }

@@ -20,6 +20,7 @@ class WaitingForTap: GKState {
   override func didEnter(from previousState: GKState?) {
       let scale = SKAction.scale(to: 1.0, duration: 0.25)
         scene.childNode(withName: "GameMessageName")!.run(scale)
+      print("IN WAITING FOR TAP MODE")
   }
   
   override func willExit(to nextState: GKState) {

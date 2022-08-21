@@ -30,6 +30,12 @@
 		C4A0C36628AC05EC0007876E /* tap-start.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C35E28AC05EC0007876E /* tap-start.mp3 */; };
 		C4A0C36728AC05EC0007876E /* minus-point.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C35F28AC05EC0007876E /* minus-point.mp3 */; };
 		C4A0C36828AC05EC0007876E /* ball-tap.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C36028AC05EC0007876E /* ball-tap.mp3 */; };
+		C4A0C37128AC136F0007876E /* UsernameField.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C37028AC136F0007876E /* UsernameField.sks */; };
+		C4A0C37328AC137B0007876E /* UsernameField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A0C37228AC137B0007876E /* UsernameField.swift */; };
+		C4F46C0228ACE25C00C657B9 /* UsernameInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F46C0128ACE25C00C657B9 /* UsernameInput.swift */; };
+		C4F46C0428AE156700C657B9 /* UserStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F46C0328AE156700C657B9 /* UserStruct.swift */; };
+		C4F46C0728AFEE8B00C657B9 /* Leaderboard.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4F46C0628AFEE8B00C657B9 /* Leaderboard.sks */; };
+		C4F46C0928AFEEA400C657B9 /* Leaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F46C0828AFEEA400C657B9 /* Leaderboard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +63,12 @@
 		C4A0C35E28AC05EC0007876E /* tap-start.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "tap-start.mp3"; sourceTree = "<group>"; };
 		C4A0C35F28AC05EC0007876E /* minus-point.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "minus-point.mp3"; sourceTree = "<group>"; };
 		C4A0C36028AC05EC0007876E /* ball-tap.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "ball-tap.mp3"; sourceTree = "<group>"; };
+		C4A0C37028AC136F0007876E /* UsernameField.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UsernameField.sks; sourceTree = "<group>"; };
+		C4A0C37228AC137B0007876E /* UsernameField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameField.swift; sourceTree = "<group>"; };
+		C4F46C0128ACE25C00C657B9 /* UsernameInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameInput.swift; sourceTree = "<group>"; };
+		C4F46C0328AE156700C657B9 /* UserStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStruct.swift; sourceTree = "<group>"; };
+		C4F46C0628AFEE8B00C657B9 /* Leaderboard.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Leaderboard.sks; sourceTree = "<group>"; };
+		C4F46C0828AFEEA400C657B9 /* Leaderboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Leaderboard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,8 +104,11 @@
 			children = (
 				C4A0C2B5289CE1F40007876E /* AppDelegate.swift */,
 				C4A0C2BD289CE1F40007876E /* GameViewController.swift */,
+				C4F46C0328AE156700C657B9 /* UserStruct.swift */,
 				C4A0C34428A579440007876E /* GameScene */,
 				C4A0C34328A5792E0007876E /* Instruction */,
+				C4F46C0528AFEE5700C657B9 /* Leaderboard */,
+				C4A0C36928AC100A0007876E /* Username */,
 				C4A0C33028A22DD70007876E /* Game States */,
 				C4A0C34528AAAAD30007876E /* Sound */,
 				C4A0C2BF289CE1F40007876E /* Main.storyboard */,
@@ -108,9 +123,10 @@
 		C4A0C33028A22DD70007876E /* Game States */ = {
 			isa = PBXGroup;
 			children = (
+				C4F46C0128ACE25C00C657B9 /* UsernameInput.swift */,
 				C4A0C32A28A22DB20007876E /* WaitingForTap.swift */,
-				C4A0C32C28A22DBC0007876E /* GameOver.swift */,
 				C4A0C32E28A22DCB0007876E /* Playing.swift */,
+				C4A0C32C28A22DBC0007876E /* GameOver.swift */,
 			);
 			path = "Game States";
 			sourceTree = "<group>";
@@ -146,6 +162,24 @@
 				C4A0C35E28AC05EC0007876E /* tap-start.mp3 */,
 			);
 			path = Sound;
+			sourceTree = "<group>";
+		};
+		C4A0C36928AC100A0007876E /* Username */ = {
+			isa = PBXGroup;
+			children = (
+				C4A0C37028AC136F0007876E /* UsernameField.sks */,
+				C4A0C37228AC137B0007876E /* UsernameField.swift */,
+			);
+			path = Username;
+			sourceTree = "<group>";
+		};
+		C4F46C0528AFEE5700C657B9 /* Leaderboard */ = {
+			isa = PBXGroup;
+			children = (
+				C4F46C0628AFEE8B00C657B9 /* Leaderboard.sks */,
+				C4F46C0828AFEEA400C657B9 /* Leaderboard.swift */,
+			);
+			path = Leaderboard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,9 +247,11 @@
 				C4A0C36228AC05EC0007876E /* game-won.mp3 in Resources */,
 				C4A0C36628AC05EC0007876E /* tap-start.mp3 in Resources */,
 				C4A0C33228A3AD6F0007876E /* Texture.sks in Resources */,
+				C4A0C37128AC136F0007876E /* UsernameField.sks in Resources */,
 				C4A0C36828AC05EC0007876E /* ball-tap.mp3 in Resources */,
 				C4A0C2C1289CE1F40007876E /* Main.storyboard in Resources */,
 				C4A0C36328AC05EC0007876E /* game-over.mp3 in Resources */,
+				C4F46C0728AFEE8B00C657B9 /* Leaderboard.sks in Resources */,
 				C4A0C2B8289CE1F40007876E /* GameScene.sks in Resources */,
 				C4A0C2D1289ED7800007876E /* Assets.xcassets in Resources */,
 				C4A0C36728AC05EC0007876E /* minus-point.mp3 in Resources */,
@@ -234,11 +270,15 @@
 			files = (
 				C4A0C32F28A22DCB0007876E /* Playing.swift in Sources */,
 				C4A0C32B28A22DB20007876E /* WaitingForTap.swift in Sources */,
+				C4F46C0928AFEEA400C657B9 /* Leaderboard.swift in Sources */,
+				C4A0C37328AC137B0007876E /* UsernameField.swift in Sources */,
 				C4A0C2BC289CE1F40007876E /* GameScene.swift in Sources */,
 				C4A0C34028A5779B0007876E /* Instruction.swift in Sources */,
 				C4A0C32D28A22DBC0007876E /* GameOver.swift in Sources */,
 				C4A0C2BE289CE1F40007876E /* GameViewController.swift in Sources */,
 				C4A0C2B6289CE1F40007876E /* AppDelegate.swift in Sources */,
+				C4F46C0228ACE25C00C657B9 /* UsernameInput.swift in Sources */,
+				C4F46C0428AE156700C657B9 /* UserStruct.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

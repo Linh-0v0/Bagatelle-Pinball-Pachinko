@@ -9,8 +9,10 @@ import SpriteKit
 import GameKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+
     // MARK: - GAME STATES
     lazy var gameState: GKStateMachine = GKStateMachine(states: [
+        UsernameInput(scene: self),
         WaitingForTap(scene: self),
         Playing(scene: self),
         GameOver(scene: self)])
@@ -39,11 +41,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             gameOver.run(actionSequence)
         }
     }
-    var isFingerOnbouncer = false
     
     // MARK: - GAME VARIABLES
     var ballCost = 25
     var scoreLabel, coinLabel, highScoreLabel, gameNotif: SKLabelNode!
+    var ballDroppedNum = 0
     var score = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
@@ -54,11 +56,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             coinLabel.text = "Coin: \(coin)"
         }
     }
-    //    var highScore = 0 {
-    //        didSet {
-    //            highScoreLabel.text = "High Score: \(highScore)"
-    //        }
-    //    }
     
     // MARK: - GAME OBJECTS BUILD
     override func didMove(to view: SKView) {
@@ -77,6 +74,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         renew.name = "renewButton"
         addChild(renew)
         
+        let addUsername = SKSpriteNode(imageNamed: "add-username")
+        addUsername.isUserInteractionEnabled = false
+        addUsername.position = CGPoint(x: 160, y: frame.size.height - 100)
+        addUsername.size = CGSize(width: 65, height: 65)
+        addUsername.zPosition = 10
+        addUsername.name = "addNewUsername"
+        addChild(addUsername)
+        
         let instruction = SKSpriteNode(imageNamed: "info")
         instruction.isUserInteractionEnabled = false
         instruction.position = CGPoint(x: frame.size.width - 70, y: frame.size.height - 100)
@@ -84,6 +89,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         instruction.zPosition = 10
         instruction.name = "instructionButton"
         addChild(instruction)
+        
+        let leaderboardBtn = SKSpriteNode(imageNamed: "leaderboard")
+        leaderboardBtn.isUserInteractionEnabled = false
+        leaderboardBtn.position = CGPoint(x: frame.size.width - 160, y: frame.size.height - 100)
+        leaderboardBtn.size = CGSize(width: 50, height: 50)
+        leaderboardBtn.zPosition = 10
+        leaderboardBtn.name = "leaderboardButton"
+        addChild(leaderboardBtn)
         
         let line = SKSpriteNode(imageNamed: "line")
         line.isUserInteractionEnabled = false
@@ -139,18 +152,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Lolipop Objects
         makeBouncer(imageName: "pink-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: 950), size: CGSize(width: self.size.width/12, height: self.size.height/13), zRotation: -0.2, zPosition: 1)
         makeBouncer(imageName: "red-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: 760), size: CGSize(width: self.size.width/17, height: self.size.height/18), zRotation: 0.4, zPosition: 1)
-        makeBouncer(imageName: "pink-loli", position: CGPoint(x: randomPositionXArr.randomElement()! + 40, y: 640), size: CGSize(width: self.size.width/19, height: self.size.height/20), zRotation: -0.055, zPosition: 1)
+        makeBouncer(imageName: "pink-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: 555), size: CGSize(width: self.size.width/19, height: self.size.height/20), zRotation: -0.055, zPosition: 1)
         makeBouncer(imageName: "black-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: 360), size: CGSize(width: self.size.width/13, height: self.size.height/14), zRotation: -0.1, zPosition: 1)
         makeBouncer(imageName: "red-loli", position: CGPoint(x: randomPositionXArr.randomElement()!, y: 150), size: CGSize(width: self.size.width/13, height: self.size.height/14), zRotation: 0.5, zPosition: 1)
         
         
-        // Score Slot Objects
+        // Score Slot Objects (Note: markScore: 0 = -25Slot)
         makeSlot(position: CGPoint(x: 50, y: 0), markScore: 0)
-        makeSlot(position: CGPoint(x: 160 + 10, y: 0), markScore: 20)
-        makeSlot(position: CGPoint(x: 260 + 10, y: 0), markScore: 50)
+        makeSlot(position: CGPoint(x: 160 + 10, y: 0), markScore: 50)
+        makeSlot(position: CGPoint(x: 260 + 10, y: 0), markScore: -50)
         makeSlot(position: CGPoint(x: 360 + 10, y: 0), markScore: 100)
-        makeSlot(position: CGPoint(x: 460 + 10, y: 0), markScore: 50)
-        makeSlot(position: CGPoint(x: 560 + 10, y: 0), markScore: 20)
+        makeSlot(position: CGPoint(x: 460 + 10, y: 0), markScore: -50)
+        makeSlot(position: CGPoint(x: 560 + 10, y: 0), markScore: 50)
         makeSlot(position: CGPoint(x: 680 + 10, y: 0), markScore: 0)
         
         // Tap To Play
@@ -162,7 +175,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameMessage.run(tapToPlaySound)
         addChild(gameMessage)
         
-        gameState.enter(WaitingForTap.self)
+        print("USERNAME: \(Defaults.getNameScoreBall().username.capitalized)")
+        print(Defaults.getUserLeaderboard(username: Defaults.getNameScoreBall().username))
+        print(".........................")
+        
+        if Defaults.getNameScoreBall().username.isEmpty {
+            gameState.enter(UsernameInput.self)
+            
+            let newScene = UsernameField(fileNamed:"UsernameField")
+           newScene!.scaleMode = .aspectFit
+           let scale = SKAction.scale(to: 1.0, duration: 0.25)
+           let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+           self.view?.presentScene(newScene!, transition: reveal)
+            
+        } else {
+            gameState.enter(WaitingForTap.self)
+        }
+        
     }
     
     // MARK: - ACTIONS WHEN TOUCH
@@ -180,11 +209,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.view?.presentScene(instructionScene!, transition: transition)
         }
         
+        if touchedNode.name == "addNewUsername" {
+            touchedNode.run(clickSound)
+            gameState.enter(UsernameInput.self)
+            
+            let newScene = UsernameField(fileNamed:"UsernameField")
+           newScene!.scaleMode = .aspectFit
+           let scale = SKAction.scale(to: 1.0, duration: 0.25)
+           let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+           self.view?.presentScene(newScene!, transition: reveal)
+        }
+        
+        if touchedNode.name == "leaderboardButton" {
+            touchedNode.run(clickSound)
+            
+            let newScene = Leaderboard(fileNamed:"Leaderboard")
+           newScene!.scaleMode = .aspectFit
+           let scale = SKAction.scale(to: 1.0, duration: 0.25)
+           let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+           self.view?.presentScene(newScene!, transition: reveal)
+        }
+        
+//        if touchedNode.name == "clearUsername" {
+//            Defaults.clearUserData()
+//        }
+        
         // Different game actions when screen touch based on the GAME STATES
         switch gameState.currentState {
+        case is UsernameInput:
+            gameState.enter(WaitingForTap.self)
+            
         case is WaitingForTap:
             gameState.enter(Playing.self)
-            isFingerOnbouncer = true
             
         case is Playing:
             // Renew game when "Renew button" is touched
@@ -195,9 +251,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
                 self.view?.presentScene(newScene!, transition: reveal)
             }
+            
             // When player has coins, and ball is only allowed to drop in specific field (above the white line)
             if coin > 0 {
-                if location.y > 1010 {
+//                if location.y > 1010 {
                     let ball = SKSpriteNode(imageNamed: "yellow-ball")
                     ball.size = CGSize(width: 40, height: 40)
                     ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width/2.0)
@@ -211,14 +268,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     
                     // Coin is substracted for each ball
                     coin -= ballCost
-                }
+//                }
             }
             
-            if let body = physicsWorld.body(at: location) {
-                if body.node!.name == "bouncer" {
-                    isFingerOnbouncer = true
-                }
-            }
         // Renew the game when Game Over (run this GameScene file again)
         case is GameOver:
             let newScene = GameScene(fileNamed:"GameScene")
@@ -230,10 +282,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             break
         }
     }
-    
-//    override func update(_ currentTime: TimeInterval) {
-//        gameState.update(deltaTime: currentTime)
-//    }
     
     // MARK: - BOUNCER (GAME OBJECTS)
     func makeBouncer(imageName: String, position: CGPoint, size: CGSize, zRotation: CGFloat, zPosition: Int) {
@@ -263,13 +311,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             slotBase.name = "slot100"
             textScore.text = "100"
             textScore.position = position
-        } else if markScore == 50 {
+        } else if markScore == -50 {
             slotBase = SKSpriteNode(imageNamed: "rect slot")
             slotBase.size = CGSize(width: 90, height: 150)
-            slotBase.name = "slot-10"
-            textScore.text = "-10"
+            slotBase.name = "slot-50"
+            textScore.text = "-50"
             textScore.position = position
-        } else if markScore == 20 {
+        } else if markScore == 50 {
             slotBase = SKSpriteNode(imageNamed: "rect slot")
             slotBase.size = CGSize(width: 90, height: 150)
             slotBase.name = "slot50"
@@ -307,10 +355,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if coin < score {
                 coin = score
             }
-        } else if object.name == "slot-10" {
+        } else if object.name == "slot-50" {
             destroy(ball: ball)
             object.run(slotMinusSound)
-            score -= 10
+            score -= 50
         } else if object.name == "slot-25" {
             destroy(ball: ball)
             object.run(slotMinusSound)
@@ -324,6 +372,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bokehParticle.position = ball.position
             addChild(bokehParticle)
         }
+        // Count the number of ball has been dropped
+        ballDroppedNum += 1
         //        remove the node from the game
         ball.removeFromParent()
     }
@@ -343,12 +393,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             // Game stops when Game Over
             if !isGameContinue() {
+                checkHighScore()
                 gameState.enter(GameOver.self)
                 gameWinOrLose = false
             }
             
             // Game stops when Won
             if isGameWon() {
+                checkHighScore()
               gameState.enter(GameOver.self)
               gameWinOrLose = true
             }
@@ -382,12 +434,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    // Win when Score = 1000
+    // Win when Score >= 1000
     func isGameWon() -> Bool {
-        if score == 1000 {
+        if score >= 1000 {
             return true
         } else {
             return false
+        }
+    }
+    
+    func checkHighScore() {
+        var username = Defaults.getNameScoreBall().username
+        var oldHighScore: Int? = Int(Defaults.getUserLeaderboard(username: username).score)
+        var oldBallDroppedNum: Int? = Int(Defaults.getNameScoreBall().ball)
+        
+        if score > oldHighScore! && score > 0 {
+            Defaults.save(username, score: String(score), ball: String(ballDroppedNum))
+            Defaults.saveToLeaderboard(username, score: String(score), ball: String(ballDroppedNum))
+        }
+        
+        if isGameWon() {
+            if (ballDroppedNum > 0) && (ballDroppedNum < oldBallDroppedNum!) {
+                Defaults.save(username, score: String(score), ball: String(ballDroppedNum))
+                Defaults.saveToLeaderboard(username, score: String(score), ball: String(ballDroppedNum))
+            }
         }
     }
 }
