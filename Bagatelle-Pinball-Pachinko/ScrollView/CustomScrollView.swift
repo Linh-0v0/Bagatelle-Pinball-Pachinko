@@ -38,7 +38,7 @@ class CustomScrollView: UIScrollView {
     private var nodesTouched = [AnyObject]()
     
     // MARK: - Init
-    init(frame: CGRect, scene: SKScene, scrollDirection: ScrollDirection ,moveableNode: SKNode) {
+    init(frame: CGRect, scene: SKScene, scrollDirection: ScrollDirection, moveableNode: SKNode) {
         self.currentScene = scene
         self.moveableNode = moveableNode
         self.scrollDirection = scrollDirection
@@ -70,12 +70,21 @@ extension CustomScrollView {
     
     /// Began
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
         for touch in touches {
             let location = touch.location(in: currentScene)
+            if (47...75).contains(location.x) && (1300...1350).contains(location.y) {
+                print("Touch BACK ARROW")
+                // GO BACK TO GAMESCENE
+                let gameScene = GameScene(fileNamed:"GameScene")
+                gameScene?.scaleMode = .aspectFit
+                let transition = SKTransition.moveIn(with: .left, duration: 1)
+                currentScene.view?.presentScene(gameScene!, transition: transition)
+
+                self.removeFromSuperview()
+            }
             
             guard !CustomScrollView.disabledTouches else { return }
-            
+
             /// Call touches began in current scene
             currentScene.touchesBegan(touches, with: event)
             
@@ -87,9 +96,8 @@ extension CustomScrollView {
         }
     }
     
-    
     /// Moved
- override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         for touch in touches {
             let location = touch.location(in: currentScene)
@@ -106,7 +114,6 @@ extension CustomScrollView {
             }
         }
     }
-    
     
     /// Ended
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -126,7 +133,7 @@ extension CustomScrollView {
             }
         }
     }
- 
+    
     /// Cancelled
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -166,7 +173,7 @@ extension CustomScrollView {
 // MARK: - Delegates
 extension CustomScrollView: UIScrollViewDelegate {
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         if scrollDirection == .horizontal {
             moveableNode.position.x = scrollView.contentOffset.x

@@ -12,7 +12,7 @@ struct Defaults {
     static let (nameKey, scoreKey, ballKey) = ("username", "score", "ball")
     static let userSessionKey = "CurrentPlayerData"
     private static let userDefault = UserDefaults.standard
-    static let leaderboardData = UserDefaults.standard
+    private static let leaderboardData = UserDefaults.standard
     static let leaderboardKey = "LeaderboardData"
     
     /**
@@ -70,13 +70,23 @@ struct Defaults {
     /**
      - Xoá chi tiết người dùng trong UserDefault qua key "com.save.usersession"
      */
-    static func clearUserSessionData(username: String){
+    static func clearUserSessionData() {
         userDefault.removeObject(forKey: userSessionKey)
     }
     
     static func clearUserData(username: String){
         userDefault.removeObject(forKey: username)
-        leaderboardData.removeObject(forKey: username)
     }
     
+    static func clearAllUsers() {
+        for data in userDefault.dictionaryRepresentation() {
+            userDefault.removeObject(forKey: data.key)
+        }
+    }
+    
+    static func clearAllLeaderboard(){
+        for data in leaderboardData.dictionaryRepresentation() {
+            leaderboardData.removeObject(forKey: data.key)
+        }
+    }
 }

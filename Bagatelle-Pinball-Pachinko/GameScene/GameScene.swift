@@ -177,9 +177,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameMessage.run(tapToPlaySound)
         addChild(gameMessage)
         
+        print(".........................")
+        
+        // MARK: - CLEAR USERDEFAULTS
+//            Defaults.clearUserSessionData()
+//            Defaults.clearAllUsers()
+//            Defaults.clearAllLeaderboard()
+        
         print("USERNAME: \(Defaults.getNameScoreBall().username.capitalized)")
         print(Defaults.getUserLeaderboard(username: Defaults.getNameScoreBall().username))
-        print(".........................")
+        
         
         if Defaults.getNameScoreBall().username.isEmpty {
             gameState.enter(UsernameInput.self)
@@ -232,10 +239,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
            self.view?.presentScene(newScene!, transition: reveal)
         }
-        
-//        if touchedNode.name == "clearUsername" {
-//            Defaults.clearUserData()
-//        }
         
         // Different game actions when screen touch based on the GAME STATES
         switch gameState.currentState {
