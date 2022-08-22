@@ -19,7 +19,30 @@ class UsernameField: SKScene, UITextFieldDelegate {
     var title: SKLabelNode!
     
     private lazy var textField: UITextField = {
-        let textField = UITextField(frame: CGRect(x: 85, y: 480, width: 210, height: 30))
+        //Determine divice size for UITextField
+        //Cuz this does not scale automatically like SpriteKit
+        let displaySize: CGRect = UIScreen.main.bounds
+        let displayWidth = displaySize.width
+        let displayHeight = displaySize.height
+        let standardWidth = CGFloat(375)
+        let standardHeight = CGFloat(812)
+        let ratioWidth: CGFloat
+        let ratioHeight: CGFloat
+        let textField: UITextField
+        //For iphone and ipad
+        if (displayWidth < displayHeight) {
+            ratioWidth = displayWidth/standardWidth
+            ratioHeight = displayHeight/standardHeight
+            textField = UITextField(frame: CGRect(x: (displayWidth/2 - 100*ratioWidth), y: (displayHeight/2 + 80*ratioHeight), width: 210*ratioWidth, height: 40*ratioHeight))
+        //For Mac where width > height
+        } else {
+            ratioWidth = displayHeight/standardHeight
+            ratioHeight = displayWidth/standardWidth
+            textField = UITextField(frame: CGRect(x: (displayWidth/2 - 120*ratioHeight), y: (displayHeight/2 + 40*ratioWidth), width: 210*ratioHeight, height: 40*ratioWidth))
+        }
+        print("\(displayWidth): \(displayHeight)")
+        
+       
         textField.textColor = SKColor(red: 0.71, green: 0.95, blue: 0.99, alpha: 1.00)
         textField.backgroundColor = SKColor(red: 0.16, green: 0.20, blue: 0.38, alpha: 1.00)
         textField.layer.borderColor = CGColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 1.00)
@@ -43,7 +66,7 @@ class UsernameField: SKScene, UITextFieldDelegate {
         addChild(logo)
         
         let title = SKSpriteNode(imageNamed: "enter-username")
-        title.position = CGPoint(x: self.size.width/2, y: 600)
+        title.position = CGPoint(x: self.size.width/2 + 10, y: 600)
         title.size = CGSize(width: title.size.width/2, height: title.size.height/2)
         title.zPosition = 10
         title.name = "enterUsername"
@@ -52,8 +75,8 @@ class UsernameField: SKScene, UITextFieldDelegate {
         self.view!.addSubview(textField)
 
         let submitUsername = SKSpriteNode(imageNamed: "done-btn")
-        submitUsername.size = CGSize(width: submitUsername.size.width/1.7, height: submitUsername.size.height/1.7)
-        submitUsername.position = CGPoint(x: 370, y: 370)
+        submitUsername.size = CGSize(width: submitUsername.size.width/1.6, height: submitUsername.size.height/1.6)
+        submitUsername.position = CGPoint(x: 360, y: 320)
         submitUsername.name = "submitUsername"
         addChild(submitUsername)
         
