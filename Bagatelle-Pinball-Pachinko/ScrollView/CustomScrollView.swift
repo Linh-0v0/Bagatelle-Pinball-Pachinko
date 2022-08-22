@@ -70,6 +70,7 @@ extension CustomScrollView {
     
     /// Began
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
         for touch in touches {
             let location = touch.location(in: currentScene)
             if (47...75).contains(location.x) && (1300...1350).contains(location.y) {
