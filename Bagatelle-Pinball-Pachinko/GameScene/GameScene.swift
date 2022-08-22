@@ -58,7 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             scoreLabel.text = "Score: \(score)"
         }
     }
-    var coin = 125 {
+    var coin = 625 {
         didSet {
             coinLabel.text = "Coin: \(coin)"
         }
@@ -125,7 +125,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         coinLabel = SKLabelNode(fontNamed: "Chalkduster")
         coinLabel.fontSize = 40
-        coinLabel.text = "Coin: 125"
+        coinLabel.text = "Coin: 625"
         coinLabel.horizontalAlignmentMode = .center
         coinLabel.fontColor = SKColor.white
         coinLabel.position = CGPoint(x: 370, y: 1200)
@@ -171,9 +171,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Score Slot Objects (Note: markScore: 0 = -25Slot)
         makeSlot(position: CGPoint(x: 50, y: 0), markScore: 0)
         makeSlot(position: CGPoint(x: 160 + 10, y: 0), markScore: 50)
-        makeSlot(position: CGPoint(x: 260 + 10, y: 0), markScore: -50)
+        makeSlot(position: CGPoint(x: 260 + 10, y: 0), markScore: -10)
         makeSlot(position: CGPoint(x: 360 + 10, y: 0), markScore: 100)
-        makeSlot(position: CGPoint(x: 460 + 10, y: 0), markScore: -50)
+        makeSlot(position: CGPoint(x: 460 + 10, y: 0), markScore: -10)
         makeSlot(position: CGPoint(x: 560 + 10, y: 0), markScore: 50)
         makeSlot(position: CGPoint(x: 680 + 10, y: 0), markScore: 0)
         
@@ -327,11 +327,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             slotBase.name = "slot100"
             textScore.text = "100"
             textScore.position = position
-        } else if markScore == -50 {
+        } else if markScore == -10 {
             slotBase = SKSpriteNode(imageNamed: "rect slot")
             slotBase.size = CGSize(width: 90, height: 150)
-            slotBase.name = "slot-50"
-            textScore.text = "-50"
+            slotBase.name = "slot-10"
+            textScore.text = "-10"
             textScore.position = position
         } else if markScore == 50 {
             slotBase = SKSpriteNode(imageNamed: "rect slot")
@@ -359,20 +359,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             destroy(ball: ball)
             object.run(slot100Sound)
             score += 100
-            if coin < score {
-                coin = score
-            }
         } else if object.name == "slot50" {
             destroy(ball: ball)
             object.run(slotScorePointSound)
             score += 50
-            if coin < score {
-                coin = score
-            }
-        } else if object.name == "slot-50" {
+        } else if object.name == "slot-10" {
             destroy(ball: ball)
             object.run(slotMinusSound)
-            score -= 50
+            score -= 10
         } else if object.name == "slot-25" {
             destroy(ball: ball)
             object.run(slotMinusSound)
@@ -448,9 +442,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    // Win when Score >= 1000
+    // Win when Score >= 800
     func isGameWon() -> Bool {
-        if score >= 1000 {
+        if score >= 800 {
             return true
         } else {
             return false
