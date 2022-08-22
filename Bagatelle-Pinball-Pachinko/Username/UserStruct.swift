@@ -1,9 +1,15 @@
-//
-//  UserStruct.swift
-//  Bagatelle-Pinball-Pachinko
-//
-//  Created by Vu Bui Khanh Linh on 18/08/2022.
-//
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2022B
+  Assessment: Assignment 2
+  Author: Vu Bui Khanh Linh
+  ID: 3864120
+  Created date: 18/08/2022
+  Last modified: 28/08/2022
+  Acknowledgement:
+    - UserDefaults Logic: https://viblo.asia/p/userdefaults-trong-swift-51-WAyK8OkN5xX 
+*/
 
 import Foundation
 

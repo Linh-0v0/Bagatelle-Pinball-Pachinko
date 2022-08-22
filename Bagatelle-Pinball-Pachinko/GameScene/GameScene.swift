@@ -1,9 +1,16 @@
-//
-//  GameScene.swift
-//  Bagatelle-Pinball-Pachinko
-//
-//  Created by Vu Bui Khanh Linh on 05/08/2022.
-//
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2022B
+  Assessment: Assignment 2
+  Author: Vu Bui Khanh Linh
+  ID: 3864120
+  Created date: 05/08/2022
+  Last modified: 22/08/2022
+  Acknowledgement:
+    - Sound: https://mixkit.co/free-sound-effects/game/
+    - Game States Logic: https://www.raywenderlich.com/1160-how-to-make-a-breakout-game-with-spritekit-and-swift-part-2
+*/
 
 import SpriteKit
 import GameKit
@@ -44,7 +51,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: - GAME VARIABLES
     var ballCost = 25
-    var scoreLabel, coinLabel, highScoreLabel, gameNotif: SKLabelNode!
+    var scoreLabel, coinLabel, highScoreLabel: SKLabelNode!
     var ballDroppedNum = 0
     var score = 0 {
         didSet {
@@ -124,6 +131,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coinLabel.position = CGPoint(x: 370, y: 1200)
         addChild(coinLabel)
         
+        // ADD PHYSICS TO THE GAME
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = self
         
@@ -131,6 +139,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let randomPositionYArr: [Int] = genNumIncrement(from: 170, to: 1000, by: 97)
         var columnNum = 0
         let numberOfXObjects = randomPositionXArr.capacity
+        
         //Plus (+) Objects
         for y in randomPositionYArr {
             var offsetValue = columnNum % 2 == 0 ? 0 : 50
@@ -177,8 +186,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameMessage.run(tapToPlaySound)
         addChild(gameMessage)
         
-        print(".........................")
-        
         // MARK: - CLEAR USERDEFAULTS
 //            Defaults.clearUserSessionData()
 //            Defaults.clearAllUsers()
@@ -187,7 +194,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         print("USERNAME: \(Defaults.getNameScoreBall().username.capitalized)")
         print(Defaults.getUserLeaderboard(username: Defaults.getNameScoreBall().username))
         
-        
+        // RUN THE INITIAL STATE OF THE GAME
+        // if NOT logged-in, go to the UsernameField View (to input username)
         if Defaults.getNameScoreBall().username.isEmpty {
             gameState.enter(UsernameInput.self)
             
@@ -196,11 +204,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
            let scale = SKAction.scale(to: 1.0, duration: 0.25)
            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
            self.view?.presentScene(newScene!, transition: reveal)
-            
+        
         } else {
             gameState.enter(WaitingForTap.self)
         }
-        
+
     }
     
     // MARK: - ACTIONS WHEN TOUCH
@@ -338,11 +346,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             textScore.text = "-25"
             textScore.position = position
         }
-        
         slotBase.position = position
         slotBase.physicsBody = SKPhysicsBody(rectangleOf: slotBase.size)
         slotBase.physicsBody?.isDynamic = false
-        
         addChild(slotBase)
         addChild(textScore)
     }
@@ -451,6 +457,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    // Check Score to put in the Leaderboard
     func checkHighScore() {
         var username = Defaults.getNameScoreBall().username
         var oldHighScore: Int? = Int(Defaults.getUserLeaderboard(username: username).score)
