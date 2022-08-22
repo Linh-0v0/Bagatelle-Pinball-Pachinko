@@ -22,7 +22,7 @@ class Leaderboard: SKScene {
     override func didMove(to view: SKView) {
         self.backgroundColor = SKColor.black
 
-        // SCROLL VIEW
+        // SCROLLVIEW
         scrollView = CustomScrollView(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height), scene: self, scrollDirection: .vertical, moveableNode: moveableNode)
         // 120px height for each Player's data (100px is for Title and Row name)
         scrollView.contentSize = CGSize(width: self.frame.size.width, height: CGFloat(leaderBoardSize*120 + 350))
@@ -44,6 +44,7 @@ class Leaderboard: SKScene {
         title.position = CGPoint(x: 70, y: 1200)
         moveableNode.addChild(title)
         
+        // COLUMN NAME ROW
         colNameRow(colNameStr: "Username", XPosition: XPositionValue)
         colNameRow(colNameStr: "Score", XPosition: XPositionValue + spaceBtwCol)
         colNameRow(colNameStr: "Ball", XPosition: XPositionValue + spaceBtwCol*2 - 160)
@@ -52,13 +53,14 @@ class Leaderboard: SKScene {
             var UserScore = Defaults.getUserLeaderboard(username: data.key).score
             var UserBall = Defaults.getUserLeaderboard(username: data.key).ball
             
-            //ADD TO LEADERBOARD SCENE
+            //ADD PLAYER DATA TO LEADERBOARD SCENE
             leaderboardData(username: String(data.key), score: UserScore, ball: UserBall, YPosition: YPositionValue)
             
             YPositionValue -= 120
         }
     }
     
+    // MARK: - CREATE OBJECT FUNCTIONS
     func colNameRow(colNameStr: String, XPosition: CGFloat) {
         colName = SKLabelNode(fontNamed: "Chalkduster")
         colName.text = colNameStr

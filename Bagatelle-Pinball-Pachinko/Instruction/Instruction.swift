@@ -24,7 +24,7 @@ class Instruction: SKScene {
         
         instructSection(titleStr: "How to Play",
                         titlePosition: CGPoint(x: 70, y: 1200),
-                        detailStr: "- You initially have 125 coins in your pocket.\n- Each Ball costs 25 Coins.\n- Get more money by Scoring MORE than the Coin you currently have.\n- You're Game Over when you're out of Coin.\n- And WIN the game by reaching 1000 points. \n- Leaderboard ranks players by the least number of balls used to win the game.",
+                        detailStr: "- You initially have 125 coins in your pocket.\n- Each Ball costs 25 Coins.\n- Get more money by Scoring MORE than the Coin you currently have.\n- You're Game Over when you're out of Coin.\n- And WIN the game by reaching 1000 points. \n- Leaderboard will save each player's highest score which larger than 0.",
                         detailPosition: CGPoint(x: 90, y: 600))
         
         instructSection(titleStr: "Application Information",

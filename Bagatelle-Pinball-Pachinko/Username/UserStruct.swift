@@ -8,16 +8,15 @@
 import Foundation
 
 struct Defaults {
-    
+    // There are 2 different list of UserDefaults
+    // Representing by these 2 different keys : userSessionKey, leaderboardKey
     static let (nameKey, scoreKey, ballKey) = ("username", "score", "ball")
     static let userSessionKey = "CurrentPlayerData"
+    static let leaderboardKey = "LeaderboardData"
     private static let userDefault = UserDefaults.standard
     private static let leaderboardData = UserDefaults.standard
-    static let leaderboardKey = "LeaderboardData"
     
-    /**
-     Nó được sử dụng để lấy ra và gán giá trị người dùng vào UserDefaults
-     */
+    /* Is used to save User to UserDefault following this "UserDetail Struct"*/
     struct UserDetails {
         let username: String
         let score: String
@@ -30,10 +29,7 @@ struct Defaults {
         }
     }
     
-    /**
-     - Lưu chi tiết người dùng
-     - Inputs - name `String` & address `String`
-     */
+    /* Save User to UserDefault */
     static func save(_ username: String, score: String, ball: String){
         userDefault.set([nameKey: username, scoreKey: score, ballKey: ball],
                         forKey: userSessionKey)
@@ -43,10 +39,7 @@ struct Defaults {
         leaderboardData.set([nameKey: username, scoreKey: score, ballKey: ball], forKey: username)
     }
     
-    /**
-     - Tìm nạp các giá trị thông qua Model `UserDetails`
-     - Output - `UserDetails` model
-     */
+    /* Get Value from UserDefaults */
     static func getNameScoreBall() -> UserDetails {
         return UserDetails((userDefault.value(forKey: userSessionKey) as? [String: String]) ?? [:])
     }
@@ -55,6 +48,7 @@ struct Defaults {
         return UserDetails((leaderboardData.value(forKey: username) as? [String: String]) ?? [:])
     }
     
+    // Return Leaderboard List getting from "leaderboardData"
     static func getLeaderboardList() -> [String: [Any]] {
         var allUsersArr: [String:[Any]] = [:]
         
@@ -67,23 +61,25 @@ struct Defaults {
     }
     
     
-    /**
-     - Xoá chi tiết người dùng trong UserDefault qua key "com.save.usersession"
-     */
+    /* Delete UserDefault */
+    // Remove the current signed-in player
     static func clearUserSessionData() {
         userDefault.removeObject(forKey: userSessionKey)
     }
     
+    // Remove the specified user
     static func clearUserData(username: String){
         userDefault.removeObject(forKey: username)
     }
     
+    // Remove all Users
     static func clearAllUsers() {
         for data in userDefault.dictionaryRepresentation() {
             userDefault.removeObject(forKey: data.key)
         }
     }
     
+    // Remove all leaderboard data
     static func clearAllLeaderboard(){
         for data in leaderboardData.dictionaryRepresentation() {
             leaderboardData.removeObject(forKey: data.key)

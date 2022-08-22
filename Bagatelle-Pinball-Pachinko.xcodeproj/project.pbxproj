@@ -114,7 +114,6 @@
 			children = (
 				C4A0C2B5289CE1F40007876E /* AppDelegate.swift */,
 				C4A0C2BD289CE1F40007876E /* GameViewController.swift */,
-				C4F46C0328AE156700C657B9 /* UserStruct.swift */,
 				C4A0C34428A579440007876E /* GameScene */,
 				C4A0C34328A5792E0007876E /* Instruction */,
 				C4F46C0528AFEE5700C657B9 /* Leaderboard */,
@@ -180,6 +179,7 @@
 			children = (
 				C4A0C37028AC136F0007876E /* UsernameField.sks */,
 				C4A0C37228AC137B0007876E /* UsernameField.swift */,
+				C4F46C0328AE156700C657B9 /* UserStruct.swift */,
 			);
 			path = Username;
 			sourceTree = "<group>";

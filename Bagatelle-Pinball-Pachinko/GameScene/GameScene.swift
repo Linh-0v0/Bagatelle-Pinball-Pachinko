@@ -218,6 +218,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.view?.presentScene(instructionScene!, transition: transition)
         }
         
+        // When touch the "addNewUserName" button, open the "Username" view scene
         if touchedNode.name == "addNewUsername" {
             touchedNode.run(clickSound)
             gameState.enter(UsernameInput.self)
@@ -229,6 +230,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
            self.view?.presentScene(newScene!, transition: reveal)
         }
         
+        // When touch the "leaderboardButton" button, open the "Leaderboard" view scene
         if touchedNode.name == "leaderboardButton" {
             touchedNode.run(clickSound)
             print("Touch Leaderboard")
@@ -240,7 +242,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
            self.view?.presentScene(newScene!, transition: reveal)
         }
         
-        // Different game actions when screen touch based on the GAME STATES
+        // Different game actions when touch (screen) based on the GAME STATES
         switch gameState.currentState {
         case is UsernameInput:
             gameState.enter(WaitingForTap.self)
