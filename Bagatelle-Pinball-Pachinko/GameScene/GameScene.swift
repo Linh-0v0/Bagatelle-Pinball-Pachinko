@@ -6,7 +6,7 @@
   Author: Vu Bui Khanh Linh
   ID: 3864120
   Created date: 05/08/2022
-  Last modified: 22/08/2022
+  Last modified: 23/08/2022
   Acknowledgement:
     - Sound: https://mixkit.co/free-sound-effects/game/
     - Game States Logic: https://www.raywenderlich.com/1160-how-to-make-a-breakout-game-with-spritekit-and-swift-part-2
@@ -270,7 +270,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             // When player has coins, and ball is only allowed to drop in specific field (above the white line)
             if coin > 0 {
-//                if location.y > 1010 {
+                if location.y > 1010 {
                     let ball = SKSpriteNode(imageNamed: "yellow-ball")
                     ball.size = CGSize(width: 40, height: 40)
                     ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width/2.0)
@@ -284,7 +284,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     
                     // Coin is substracted for each ball
                     coin -= ballCost
-//                }
+                }
             }
             
         // Renew the game when Game Over (run this GameScene file again)
