@@ -135,14 +135,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = self
         
-        let randomPositionXArr: [Int] = genNumIncrement(from: 70, to: 680, by: 120)
-        let randomPositionYArr: [Int] = genNumIncrement(from: 170, to: 1000, by: 97)
+        let randomPositionXArr: [Int] = genNumIncrement(from: 75, to: 680, by: 120)
+        let randomPositionYArr: [Int] = genNumIncrement(from: 155, to: 1000, by: 102)
         var columnNum = 0
         let numberOfXObjects = randomPositionXArr.capacity
         
         //Plus (+) Objects
         for y in randomPositionYArr {
-            var offsetValue = columnNum % 2 == 0 ? 0 : 50
+            var offsetValue = columnNum % 2 == 0 ? 0 : 60
             if columnNum % 2 == 0 {
                 for x in randomPositionXArr {
                     makeBouncer(imageName: "Plus Symbol-\(Int.random(in: 0..<10))",
