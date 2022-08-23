@@ -29,7 +29,7 @@ class Instruction: SKScene {
         
         instructSection(titleStr: "How to Play",
                         titlePosition: CGPoint(x: 70, y: 1200),
-                        detailStr: "- You initially have 625 COINS which equals 25 BALLS in your pocket.\n- Each BALL COSTS 25 coins .\n- You're Game Over when you're out of Coin.\n- And WIN the game by reaching 800 points. \n- Leaderboard will save EACH PLAYER's highest score (>0 score point) with the lowest amount of balls",
+                        detailStr: "- You initially have 625 COINS which equals 25 BALLS in your pocket.\n- Each BALL COSTS 25 coins .\n- You're Game Over when you're out of Coin.\n- And WIN the game by reaching 800 points. \n- Leaderboard will save EACH PLAYER's highest score (>0 score point) with the lowest amount of balls.",
                         detailPosition: CGPoint(x: 90, y: 600))
         
         instructSection(titleStr: "Application Information",

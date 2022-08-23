@@ -20,7 +20,6 @@
 		C4A0C32B28A22DB20007876E /* WaitingForTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A0C32A28A22DB20007876E /* WaitingForTap.swift */; };
 		C4A0C32D28A22DBC0007876E /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A0C32C28A22DBC0007876E /* GameOver.swift */; };
 		C4A0C32F28A22DCB0007876E /* Playing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A0C32E28A22DCB0007876E /* Playing.swift */; };
-		C4A0C33228A3AD6F0007876E /* Texture.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C33128A3AD6F0007876E /* Texture.sks */; };
 		C4A0C34028A5779B0007876E /* Instruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A0C33F28A5779B0007876E /* Instruction.swift */; };
 		C4A0C34228A578870007876E /* Instruction.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C34128A578870007876E /* Instruction.sks */; };
 		C4A0C36128AC05EC0007876E /* score-point.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C4A0C35928AC05EB0007876E /* score-point.mp3 */; };
@@ -54,7 +53,6 @@
 		C4A0C32A28A22DB20007876E /* WaitingForTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingForTap.swift; sourceTree = "<group>"; };
 		C4A0C32C28A22DBC0007876E /* GameOver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOver.swift; sourceTree = "<group>"; };
 		C4A0C32E28A22DCB0007876E /* Playing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playing.swift; sourceTree = "<group>"; };
-		C4A0C33128A3AD6F0007876E /* Texture.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Texture.sks; sourceTree = "<group>"; };
 		C4A0C33F28A5779B0007876E /* Instruction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instruction.swift; sourceTree = "<group>"; };
 		C4A0C34128A578870007876E /* Instruction.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Instruction.sks; sourceTree = "<group>"; };
 		C4A0C35928AC05EB0007876E /* score-point.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "score-point.mp3"; sourceTree = "<group>"; };
@@ -125,7 +123,6 @@
 				C4A0C2C2289CE1F60007876E /* Assets.xcassets */,
 				C4A0C2C4289CE1F60007876E /* LaunchScreen.storyboard */,
 				C4A0C2CC289ED7670007876E /* BokehEffect.sks */,
-				C4A0C33128A3AD6F0007876E /* Texture.sks */,
 			);
 			path = "Bagatelle-Pinball-Pachinko";
 			sourceTree = "<group>";
@@ -257,7 +254,6 @@
 				C4A0C2CD289ED7670007876E /* BokehEffect.sks in Resources */,
 				C4A0C36228AC05EC0007876E /* game-won.mp3 in Resources */,
 				C4A0C36628AC05EC0007876E /* tap-start.mp3 in Resources */,
-				C4A0C33228A3AD6F0007876E /* Texture.sks in Resources */,
 				C4A0C37128AC136F0007876E /* UsernameField.sks in Resources */,
 				C4A0C36828AC05EC0007876E /* ball-tap.mp3 in Resources */,
 				C4A0C2C1289CE1F40007876E /* Main.storyboard in Resources */,
