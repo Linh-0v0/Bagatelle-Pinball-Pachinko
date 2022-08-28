@@ -6,7 +6,7 @@
   Author: Vu Bui Khanh Linh
   ID: 3864120
   Created date: 19/08/2022
-  Last modified: 22/08/2022
+  Last modified: 28/08/2022
   Acknowledgement: None
 */
 
@@ -40,7 +40,7 @@ class Leaderboard: SKScene {
         leftArrow.name = "leftArrow"
         leftArrow.position = CGPoint(x: 60, y: self.size.height - 20)
         leftArrow.size = CGSize(width: 50, height: 50)
-        moveableNode.addChild(leftArrow)
+        addChild(leftArrow)
         
         title = SKLabelNode(fontNamed: "Chalkduster")
         title.text = "Leaderboard"
