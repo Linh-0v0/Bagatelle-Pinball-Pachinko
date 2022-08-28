@@ -18,9 +18,7 @@ struct Defaults {
     // Representing by these 2 different keys : userSessionKey, leaderboardKey
     static let (nameKey, scoreKey, ballKey) = ("username", "score", "ball")
     static let userSessionKey = "CurrentPlayerData"
-    static let leaderboardKey = "LeaderboardData"
     private static let userDefault = UserDefaults.standard
-    private static let leaderboardData = UserDefaults.standard
     
     /* Is used to save User to UserDefault following this "UserDetail Struct"*/
     struct UserDetails {
@@ -42,23 +40,24 @@ struct Defaults {
     }
     
     static func saveToLeaderboard(_ username: String, score: String, ball: String) {
-        leaderboardData.set([nameKey: username, scoreKey: score, ballKey: ball], forKey: username)
+        userDefault.set([nameKey: username, scoreKey: score, ballKey: ball], forKey: username)
     }
     
     /* Get Value from UserDefaults */
+    //Get value of current User
     static func getNameScoreBall() -> UserDetails {
         return UserDetails((userDefault.value(forKey: userSessionKey) as? [String: String]) ?? [:])
     }
-    
+    //Get value of user
     static func getUserLeaderboard(username: String) -> UserDetails {
-        return UserDetails((leaderboardData.value(forKey: username) as? [String: String]) ?? [:])
+        return UserDetails((userDefault.value(forKey: username) as? [String: String]) ?? [:])
     }
     
-    // Return Leaderboard List getting from "leaderboardData"
+    // Return Leaderboard List getting from "userDefault"
     static func getLeaderboardList() -> [String: [Any]] {
         var allUsersArr: [String:[Any]] = [:]
         
-        for data in leaderboardData.dictionaryRepresentation() {
+        for data in userDefault.dictionaryRepresentation() {
             if (data.value is NSDictionary) && (data.key != userSessionKey){
                 allUsersArr[data.key] = [data.value]
             }
@@ -85,10 +84,4 @@ struct Defaults {
         }
     }
     
-    // Remove all leaderboard data
-    static func clearAllLeaderboard(){
-        for data in leaderboardData.dictionaryRepresentation() {
-            leaderboardData.removeObject(forKey: data.key)
-        }
-    }
 }

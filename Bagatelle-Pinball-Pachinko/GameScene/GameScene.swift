@@ -189,7 +189,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // MARK: - CLEAR USERDEFAULTS
 //            Defaults.clearUserSessionData()
 //            Defaults.clearAllUsers()
-//            Defaults.clearAllLeaderboard()
         
         print("USERNAME: \(Defaults.getNameScoreBall().username.capitalized)")
         print(Defaults.getUserLeaderboard(username: Defaults.getNameScoreBall().username))
